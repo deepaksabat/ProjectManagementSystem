@@ -1,0 +1,15 @@
+<div class="col-xs-12 col-sm-4 col-md-3">
+  <div class="inline">
+    <%= form_for(tag, html: {class: "form-inline"}) do |f| %>
+    <div class="form-group mobile-tag-field">
+      <%= f.text_field :name, class: "form-control tiny-field" %>
+    </div>
+    <div class="form-group mobile-tag-field">
+      <%= f.submit "✓", class: "btn btn-sm btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+    <div class="inline">
+      <%= link_to "X", tag_path(tag), method: :delete, class: "btn btn-sm btn-danger" %>
+    </div>
+</div>

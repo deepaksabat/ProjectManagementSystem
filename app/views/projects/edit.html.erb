@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-6">
+      <div class="default-block">
+      <h2>Edit Project</h2>
+      <div class="line-dark"></div>
+      <%= render partial: "messages/errors", locals: {resource: @project} %>
+      <%= render partial: "edit_form", locals: {project: @project} %>
+    </div>
+    </div>
+    <div class="col-md-6"> 
+      <div class="default-block">
+        <h3>Edit Collaborators</h3>
+        <div class="line-dark"></div>
+        <% @user_projects.each do |user_project, index| %>
+          <%= render partial: "edit_collaborators_and_permissions_form", locals: {user_project: user_project, project: @project, index: index} %>
+        <%end %>
+      </div>
+    </div>
+  </div>
+</div>

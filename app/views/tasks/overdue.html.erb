@@ -1,0 +1,16 @@
+<%= render partial: "project_task_options", locals:{overdue: @overdue, active: @active, complete: @complete} %>
+<div class="default-block">
+  <h2>Overdue Tasks</h2>
+  <div class="line-dark"></div>
+  <% if @tasks.empty? %>
+    <h4><%= "You don't have any late projects. Good job!" %></h4>
+  <% else %>
+    <div class="row">
+      <% @tasks.each_with_index do |task, index| %>
+        <%= render partial: "task", locals: {task: task, index: index } %>
+      <%end %>
+    </div>
+
+  <% end %> <!-- if/else end -->
+
+</div> <!-- block end -->

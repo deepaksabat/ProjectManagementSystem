@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tasks - Rails PM</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <%= render "navs/nav_base"%>
+    <div class="header">
+      <div class="container">
+        <% if params[:controller] == "comments" && params[:action] == "index" %>
+          <h1> Comments</h1> 
+        <% else %>
+          <h1> Tasks </h1> 
+        <% end %>
+      </div>
+    </div>
+    <%= render "navs/projects_sub_nav" unless @project.nil? %>
+    <div class="container">
+      <%= render "layouts/flash_block" %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
+
+

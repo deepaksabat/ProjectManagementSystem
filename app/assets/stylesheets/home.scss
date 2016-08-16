@@ -1,0 +1,88 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.hero {
+   background: url(http://core0.staticworld.net/images/article/2015/01/intro_hp-100539459-primary.idge.jpg) no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 500px;
+  -webkit-filter: brightness(0.2);
+  filter: brightness(0.2);
+  -webkit-filter: saturate(0.5);
+  filter: saturate(0.5);
+  -webkit-filter: contrast(0.5);
+  filter: contrast(0.5);
+}
+
+
+.hero-filter h1{
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px #333;
+  position: relative;
+  top: 150px;
+  z-index: 999;
+  height: 0px;
+  margin: 0px;
+}
+
+.hero-filter p {
+  text-align: center;
+  position: relative;
+  top: 350px;
+  z-index: 999;
+  height: 0px;
+  margin: 0px;
+}
+
+.profile-block {
+  background-color: #eee;
+  padding: 10px 25px;
+  margin: 10px 0px;
+  border: 2px solid #ddd;
+}
+
+.profile-options {
+  display: none;
+}
+
+footer {
+  height: 50px;
+  background-color: #333;
+  color: #eee;
+  text-align: center;
+}
+
+footer p {
+  
+  padding-top: 15px;
+}
+
+.home-block-dark {
+  background-color: #3399ff;
+  padding: 75px 25px;
+  color: #eee;
+}
+
+.home-block p{
+  font-size: 18px;
+  padding: 20px 40px;
+}
+
+.home-block h4 {
+  padding: 10px 40px;
+}
+
+.home-block-light {
+  background-color: #fff;
+  padding: 75px 25px;
+}
+
+.btn-margin {
+  margin-bottom: 10px;
+}
+
+
