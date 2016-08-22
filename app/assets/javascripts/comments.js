@@ -26,6 +26,7 @@ function newComment() {
         var comment = new Comment(data);
         var commentRender = comment.renderComment()
         $(".comments").prepend(commentRender);
+        $("#comment_content").val("");
       });
   });
 }
