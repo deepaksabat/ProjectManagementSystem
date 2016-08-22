@@ -50,3 +50,29 @@
   </div> <!-- col-md-8 end -->
 
 </div> <!-- Row end -->
+
+
+<script id="comment-template" type="text/x-handlebars-template">
+  <div class="comment-template-js" id="{{comment-id}}">
+    <p> Posted: {{friendCreatedAt}} by <%= @comment.user.name %></p>
+    <p>On <%= link_to @comment.task.name, task_path(@comment.task) %> in <%= link_to @comment.task.project.name, project_path(@comment.task.project) %></p>
+    <p> {{content}}</p>
+    <div class="inline-button">
+      <%= link_to "Edit", edit_comment_path(@comment), class: "btn btn-sm btn-primary" %> 
+    </div>
+    <div class="inline-button"> 
+      <form class="btn btn-sm btn-danger" method="post" action="/tasks/{{id}}">
+        <input type="hidden" name="_method" value="delete" />
+        <input class="btn btn-sm btn-danger" type="submit" value="Delete Task" />
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input type="sumbit" value="Delete">
+      </form>   
+    </div>
+    <div class="line-light"></div>
+  </div>
+  <% if comment.index_check(index) %>
+    <div class="clearfix"></div>
+  <% end %>
+</script>
+
+
