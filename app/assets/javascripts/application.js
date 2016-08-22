@@ -13,9 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require_tree .
+//= require_tree
+
 
 $(document).ready(function(){
+  
   $( "#show-profile-options" ).click(function() {
     $( ".profile-options" ).slideToggle( "slow", "swing" );
     if ($( "#show-profile-options" ).val() == "Edit Profile"){
@@ -24,4 +26,5 @@ $(document).ready(function(){
       $( "#show-profile-options" ).val("Edit Profile");
     }
   });
+
 });

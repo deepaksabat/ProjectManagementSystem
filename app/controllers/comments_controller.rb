@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   layout "comments_layout", only: [:index]
   layout "tasks_layout"
-  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_comment, only: [:edit, :update, :show, :destroy]
   before_action :set_task, only: [:edit, :update, :destroy]
   before_action :set_project
   
@@ -20,11 +20,15 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
       @task = @comment.task
-      redirect_to task_path(@task)
+      render json: (@comment)
     else
       @comments = @task.comments
       render 'tasks/show'
     end
+  end
+
+  def show 
+    render json: (@comment)
   end
 
   def edit
