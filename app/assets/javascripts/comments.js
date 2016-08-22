@@ -6,14 +6,12 @@ function Comment(attributes) {
   this.user_id = attributes.user_id;
 }
 
-Comment.prototype.friendly_created_at(){
+// Comment.prototype.friendly_created_at(){
 
-}
+// }
 
-Comment.templateSource = $("#commentTemplate").html();
-Comment.template = Handlebars.compile(source); 
 Comment.prototype.renderComment = function (){
-  
+  return Comment.template(this);
 }
 
 
@@ -25,16 +23,17 @@ function newComment() {
     var values = $(this).serialize();
 
     $.post('/projects/1/comments',values).success(function(data) {
-      debugger
-      console.log(data)
-        $(".comments").prepend('<div id="' + data.id + '">' + data.content + '</div>');
-        $("#test").html(data.content);
+        var comment = new Comment(data);
+        var commentRender = comment.renderComment()
+        $(".comments").prepend(commentRender);
       });
   });
 }
 
 
 $(document).ready(function(){
+  Comment.templateSource = $("#commentTemplate").html();
+  Comment.template = Handlebars.compile(Comment.templateSource); 
   newComment();
 });
 
