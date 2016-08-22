@@ -1,3 +1,22 @@
+function Comment(attributes) {
+  this.id = attributes.id;
+  this.content = attributes.content;
+  this.created_at = attributes.created_at;
+  this.task_id = attributes.task_id;
+  this.user_id = attributes.user_id;
+}
+
+Comment.prototype.friendly_created_at(){
+
+}
+
+Comment.templateSource = $("#commentTemplate").html();
+Comment.template = Handlebars.compile(source); 
+Comment.prototype.renderComment = function (){
+  
+}
+
+
 function newComment() {
   $('#new_comment').submit(function(event) {
     //prevent form from submitting the default way
