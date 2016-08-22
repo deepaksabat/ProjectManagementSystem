@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 
   def show
     @project = @task.project
-    @comment = Comment.new
+    @comment = Comment.new(user: @user, task: @task)
     @comments = @task.comments.reverse
     @assigned_users = @task.assigned_users
     @tags = @task.tags
