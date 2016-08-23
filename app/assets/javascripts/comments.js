@@ -6,24 +6,39 @@ function Comment(attributes) {
   this.user_id = attributes.user_id;
 }
 
-// Comment.prototype.friendly_created_at(){
-
-// }
-
-Comment.prototype.renderComment = function (){
-  return Comment.template(this);
+Comment.prototype.friendlyDate = function (){
+  var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+  var date = new Date(this.created_at);
+  var month = monthNames[date.getMonth()];
+  var monthDate = date.getDate();
+  var year = date.getFullYear();
+  return month + " " + monthDate + ", " + year
 }
 
+Comment.prototype.friendlyTime = function (){
+  var date = new Date(this.created_at);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var amPM = hours >= 12 ? 'PM' : 'AM'
+  hours = hours % 12 ; 
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + amPM;
+  return strTime;
+}
+
+Comment.prototype.renderComment = function (){
+  return Comment.template({content: this.content, id: this.id, friendlyDate: this.friendlyDate, friendlyTime: this.friendlyTime});
+}
 
 function newComment() {
   $('#new_comment').submit(function(event) {
-    //prevent form from submitting the default way
     event.preventDefault();
-
     var values = $(this).serialize();
-
     $.post('/projects/1/comments',values).success(function(data) {
+      console.log(data)
         var comment = new Comment(data);
+        debugger
         var commentRender = comment.renderComment()
         $(".comments").prepend(commentRender);
         $("#comment_content").val("");
@@ -37,19 +52,3 @@ $(document).ready(function(){
   Comment.template = Handlebars.compile(Comment.templateSource); 
   newComment();
 });
-
-
-
-
-// `<div class="<%= col %>" id="<%= comment.id%>">`
-//   <p> Posted: <%= comment.friendly_created_at %> by <%= comment.user.name %></p>
-//   <p>On <%= link_to comment.task.name, task_path(comment.task) %> in <%= link_to comment.task.project.name, project_path(comment.task.project) %></p>
-//   <p> <%= comment.content %></p>
-//   <div class="inline-button">
-//     <%= link_to "Edit", edit_comment_path(comment), class: "btn btn-sm btn-primary" %> 
-//   </div>
-//   <div class="inline-button">    
-//     <%= button_to "Delete", comment_path(comment), method: :delete, class: "btn btn-sm btn-danger" %>
-//   </div>
-//   <div class="line-light"></div>
-// </div>
