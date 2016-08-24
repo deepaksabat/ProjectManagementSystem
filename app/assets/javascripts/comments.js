@@ -7,28 +7,24 @@ function Comment(attributes) {
 }
 
 Comment.prototype.friendlyDate = function (){
-  var monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
   var date = new Date(this.created_at);
-  var month = monthNames[date.getMonth()];
-  var monthDate = date.getDate();
-  var year = date.getFullYear();
-  return month + " " + monthDate + ", " + year
+  var friendlyDate = formatDate(date);
+  return friendlyDate;
 }
 
-Comment.prototype.friendlyTime = function (){
-  var date = new Date(this.created_at);
+function formatDate(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
-  var amPM = hours >= 12 ? 'PM' : 'AM'
-  hours = hours % 12 ; 
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + amPM;
-  return strTime;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
 }
 
 Comment.prototype.renderComment = function (){
-  return Comment.template({content: this.content, id: this.id, friendlyDate: this.friendlyDate, friendlyTime: this.friendlyTime});
+  return Comment.template({content: this.content, id: this.id, createdAt: this.friendlyDate()});
 }
 
 function newComment() {
@@ -36,9 +32,7 @@ function newComment() {
     event.preventDefault();
     var values = $(this).serialize();
     $.post('/projects/1/comments',values).success(function(data) {
-      console.log(data)
         var comment = new Comment(data);
-        debugger
         var commentRender = comment.renderComment()
         $(".comments").prepend(commentRender);
         $("#comment_content").val("");

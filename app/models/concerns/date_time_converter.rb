@@ -1,5 +1,5 @@
 module DateTimeConverter
   def friendly_created_at
-    self.created_at.strftime("%b. %d, %Y at %I:%M %p")
+    self.created_at.strftime(" %m/%d/%Y at %I:%M %p")
   end
 end
