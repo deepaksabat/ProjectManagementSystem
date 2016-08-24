@@ -7,9 +7,11 @@
     <h4>It looks like you don't have any tasks. Why not create new one?</h4>
   <% else %>
     <div class="row">
-      <% @tasks.each_with_index do |task, index| %>
-        <%= render partial: "task", locals: {task: task, index: index } %>
-      <%end %>
+      <div class="active-tasks">
+        <% @tasks.each_with_index do |task, index| %>
+          <%= render partial: "task", locals: {task: task, index: index } %>
+        <%end %>
+      </div>
     </div>
   <% end %>
 </div>
