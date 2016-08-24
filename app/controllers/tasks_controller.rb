@@ -11,6 +11,10 @@ class TasksController < ApplicationController
     @task = Task.new(project_id: @project.id)
     authorize @task
     @tasks = @project.active_tasks
+    respond_to do |format|
+      format.html {render :index}
+      format.json {render json: @tasks}
+    end
   end
 
   def new
