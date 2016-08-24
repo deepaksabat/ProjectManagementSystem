@@ -36,6 +36,10 @@ class TasksController < ApplicationController
     @comments = @task.comments.reverse
     @assigned_users = @task.assigned_users
     @tags = @task.tags
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @task}
+    end
   end
 
   def edit
