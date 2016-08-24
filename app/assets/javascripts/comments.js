@@ -42,7 +42,7 @@ function newComment() {
 
 
 $(document).ready(function(){
-  Comment.templateSource = $("#commentTemplate").html();
-  Comment.template = Handlebars.compile(Comment.templateSource); 
-  newComment();
+  // Comment.templateSource = $("#commentTemplate").html();
+  // Comment.template = Handlebars.compile(Comment.templateSource); 
+  // newComment();
 });
