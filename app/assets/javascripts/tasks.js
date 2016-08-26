@@ -8,7 +8,8 @@ function getActiveTasks() {
         $(".row").html("");
         $.each(data, function(index, task){
           var task = new Task(task);
-          debugger
+          task.overdueCheck();
+          task.completeCheck();
           var taskRender = task.renderTask()
           $(".row").prepend(taskRender);
         })
@@ -27,7 +28,8 @@ function Task(attributes) {
   this.projectName = attributes.project.name;
   this.commentCount = attributes.comments.length;
   this.projectID = attributes.project.id;
-  this.overduenum = "";
+  this.overdue = "";
+  this.complete = "";
 }
 
 Task.prototype.assignUsers = function() {
@@ -38,15 +40,21 @@ Task.prototype.assignUsers = function() {
   return names;
 }
 
-
-Task.prototype.overdue = function() {
-  var createdDate = new Date(this.created_at);
+Task.prototype.overdueCheck = function() {
+  var createdDate = new Date(this.createdAt);
   var currentDate = new Date();
   if (createdDate < currentDate) {
     this.overdue = "Overdue";
+  } else {
+    return "hello";
   }
 }
 
+Task.prototype.completeCheck = function() {
+  if (this.status === "complete") {
+    this.complete = "Complete";
+  }
+}
 
 Task.prototype.renderTask = function (){
   return Task.template(this);
