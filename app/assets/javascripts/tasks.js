@@ -8,6 +8,7 @@ function getActiveTasks() {
         $(".row").html("");
         $.each(data, function(index, task){
           var task = new Task(task);
+          debugger
           var taskRender = task.renderTask()
           $(".row").prepend(taskRender);
         })
@@ -26,17 +27,26 @@ function Task(attributes) {
   this.projectName = attributes.project.name;
   this.commentCount = attributes.comments.length;
   this.projectID = attributes.project.id;
-  this.assignees = assignUsers();
-  debugger
+  this.overduenum = "";
+}
 
-  function assignUsers() {
-    var names = "";
-    $.each(attributes.assigned_users, function(index, user){
-      names = names + user.name + " ";
-    });
-    return names;
+Task.prototype.assignUsers = function() {
+  var names = "";
+  $.each(attributes.assigned_users, function(index, user){
+    names = names + user.name + " ";
+  });
+  return names;
+}
+
+
+Task.prototype.overdue = function() {
+  var createdDate = new Date(this.created_at);
+  var currentDate = new Date();
+  if (createdDate < currentDate) {
+    this.overdue = "Overdue";
   }
 }
+
 
 Task.prototype.renderTask = function (){
   return Task.template(this);

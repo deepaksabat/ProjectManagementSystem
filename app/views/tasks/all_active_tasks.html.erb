@@ -19,6 +19,8 @@
 <script id="activeTasksTemplate" type="text/x-handlebars-template">
   <div class="active-tasks-template-js col-md-4" id="{{id}}">
     <h3> <a href="/tasks/{{id}}">{{name}} </a> </h3>
+    <span class="overdue"> {{overdue}} </span>
+    <span class="complete"> {{complete}} </span>
     <p> {{description}} </p>
     <p> Created: {{createdAt}} </p>
     <p> Owner: {{ownerName}} </p>
