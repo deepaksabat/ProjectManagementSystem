@@ -40,11 +40,14 @@ function newComment() {
   });
 }
 
+function compileTemplate(){
+  source = $("#template").html();
+  if ( source !== undefined ) {
+    template = Handlebars.compile(source); 
+  }
+}
 
 $(document).ready(function(){
-  if ($("#template") !== undefined ) {
-    source = $("#template").html();
-    template = Handlebars.compile(source); 
-    newComment();
-  }
+  compileTemplate();
+  newComment();
 });

@@ -150,9 +150,15 @@ function getAllTasks() {
   });
 }
 
-$(document).ready(function(){
+function compileTemplate(){
   source = $("#template").html();
-  template = Handlebars.compile(source); 
+  if ( source !== undefined ) {
+    template = Handlebars.compile(source); 
+  }
+}
+
+$(document).ready(function(){
+  compileTemplate();
   getActiveTasks();
   getCompleteTasks();
   getOverdueTasks();
