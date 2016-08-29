@@ -94,6 +94,9 @@ function getCompleteTasks() {
           var taskRender = taskObject.renderTask();
           $("h2").html("All Complete Tasks");
           $(".row").prepend(taskRender);
+          if (taskObject.selfAssignCheck(task.assigned_users) === true){
+            $("#self-assign").text("Assigned to you");
+          }
         })
       });
   });
@@ -115,6 +118,9 @@ function getOverdueTasks() {
           var taskRender = taskObject.renderTask();
           $("h2").html("All Overdue Tasks");
           $(".row").prepend(taskRender);
+          if (taskObject.selfAssignCheck(task.assigned_users) === true){
+            $("#self-assign").text("Assigned to you");
+          }
         })
       });
   });
@@ -136,6 +142,9 @@ function getAllTasks() {
           var taskRender = taskObject.renderTask();
           $("h2").html("All Tasks");
           $(".row").prepend(taskRender);
+          if (taskObject.selfAssignCheck(task.assigned_users) === true){
+            $("#self-assign").text("Assigned to you");
+          }
         })
       });
   });
