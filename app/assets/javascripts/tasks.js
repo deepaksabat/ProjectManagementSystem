@@ -54,100 +54,45 @@ class Task {
   }
 }
 
-function getActiveTasks() {
-  $('#active-tasks').on("click", function(e) {
-    $.ajax({
-      url: '/tasks/all-active-tasks',
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
-        $(".row").html("");
-        $.each(data, function(index, task){
-          var taskObject = new Task(task);
-          taskObject.completeCheck();
-          taskObject.overdueCheck();
-          taskObject.assignUsers(task.assigned_users);          
-          var taskRender = taskObject.renderTask()
-          $("h2").html("All Active Tasks");
-          $(".row").prepend(taskRender);
-          if (taskObject.selfAssignCheck(task.assigned_users) === true){
-            $("#self-assign").text("Assigned to you");
-          }
-        })
+function getTasks() {
+  $('.js-filter').on("click", function(e) {
+    if ($(event.target)[0].id === "all"){
+      var title = "All Tasks";
+      $.ajax({
+        url: '/tasks/all',
+        method: "GET",
+        dataType: 'JSON'
+      }).success(function(data) {
+        renderResponse(data, title);
       });
+    } else {
+      var route = $(event.target)[0].id
+      $.ajax({
+        url: '/tasks/all' + '-' + route,
+        method: "GET",
+        dataType: 'JSON'
+      }).success(function(data) {
+        renderResponse(data, route);
+      });
+    } 
   });
 }
 
-function getCompleteTasks() {
-  $('#complete-tasks').on("click", function(e) {
-    $.ajax({
-      url: '/tasks/all-complete-tasks',
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
-        $(".row").html("");
-        $.each(data, function(index, task){
-          var taskObject = new Task(task);
-          taskObject.overdueCheck();
-          taskObject.completeCheck();
-          taskObject.assignUsers(task.assigned_users);
-          var taskRender = taskObject.renderTask();
-          $("h2").html("All Complete Tasks");
-          $(".row").prepend(taskRender);
-          if (taskObject.selfAssignCheck(task.assigned_users) === true){
-            $("#self-assign").text("Assigned to you");
-          }
-        })
-      });
-  });
-}
 
-function getOverdueTasks() {
-  $('#overdue-tasks').on("click", function(e) {
-    $.ajax({
-      url: '/tasks/all-overdue-tasks',
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
-        $(".row").html("");
-        $.each(data, function(index, task){
-          var taskObject = new Task(task);
-          taskObject.overdueCheck();
-          taskObject.completeCheck();
-          taskObject.assignUsers(task.assigned_users);
-          var taskRender = taskObject.renderTask();
-          $("h2").html("All Overdue Tasks");
-          $(".row").prepend(taskRender);
-          if (taskObject.selfAssignCheck(task.assigned_users) === true){
-            $("#self-assign").text("Assigned to you");
-          }
-        })
-      });
-  });
-}
-
-function getAllTasks() {
-  $('#all').on("click", function(e) {
-    $.ajax({
-      url: '/tasks/all',
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
-        $(".row").html("");
-        $.each(data, function(index, task){
-          var taskObject = new Task(task);
-          taskObject.overdueCheck();
-          taskObject.completeCheck();
-          taskObject.assignUsers(task.assigned_users);
-          var taskRender = taskObject.renderTask();
-          $("h2").html("All Tasks");
-          $(".row").prepend(taskRender);
-          if (taskObject.selfAssignCheck(task.assigned_users) === true){
-            $("#self-assign").text("Assigned to you");
-          }
-        })
-      });
-  });
+function renderResponse(data, route) {
+  $(".row").html("");
+  $.each(data, function(index, task){
+    var taskObject = new Task(task);
+    taskObject.overdueCheck();
+    taskObject.completeCheck();
+    taskObject.assignUsers(task.assigned_users);
+    var taskRender = taskObject.renderTask();
+    $("h2").html(route);
+    $(".row").prepend(taskRender);
+    if (taskObject.selfAssignCheck(task.assigned_users) === true){
+      $("#self-assign").text("Assigned to you");
+    }
+  })
 }
 
 function compileTemplate(){
@@ -159,8 +104,5 @@ function compileTemplate(){
 
 $(document).ready(function(){
   compileTemplate();
-  getActiveTasks();
-  getCompleteTasks();
-  getOverdueTasks();
-  getAllTasks();
+  getTasks();
 });
