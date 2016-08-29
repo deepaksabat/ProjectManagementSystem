@@ -2,13 +2,16 @@
   <div class="inline-button">
     <%= link_to "Add a New Task", quick_new_task_path, class: "btn btn-default td-button" %>
   </div>
-   <div class="inline-button">
-    <%= link_to "Active Tasks ( #{active} )", "#", class: "btn btn-warning", id: "active-tasks" %> 
+  <div class="inline-button">
+    <%= link_to "All Tasks", "#", class: "btn btn-default", id: "all" %> 
   </div>
   <div class="inline-button">
-    <%= link_to "Complete Tasks ( #{complete} )", "#", class: "btn btn-success", id: "complete-tasks"  %>
+    <%= link_to "Active Tasks ( #{active} )", "#active", class: "btn btn-warning", id: "active-tasks" %> 
   </div>
   <div class="inline-button">
-    <%= link_to "Overdue Tasks ( #{overdue} )", "#", class: "btn btn-danger", id: "overdue-tasks"  %>
+    <%= link_to "Complete Tasks ( #{complete} )", "#complete", class: "btn btn-success", id: "complete-tasks"  %>
+  </div>
+  <div class="inline-button">
+    <%= link_to "Overdue Tasks ( #{overdue} )", "#overdue", class: "btn btn-danger", id: "overdue-tasks"  %>
   </div>
 </div>

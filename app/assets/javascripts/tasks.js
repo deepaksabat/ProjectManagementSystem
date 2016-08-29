@@ -85,9 +85,53 @@ function getCompleteTasks() {
   });
 }
 
+function getOverdueTasks() {
+  $('#overdue-tasks').on("click", function(e) {
+    $.ajax({
+      url: '/tasks/all-overdue-tasks',
+      method: "GET",
+      dataType: 'JSON'
+    }).success(function(data) {
+        $(".row").html("");
+        $.each(data, function(index, task){
+          var taskObject = new Task(task);
+          taskObject.overdueCheck();
+          taskObject.completeCheck();
+          taskObject.assignUsers(task.assigned_users);
+          var taskRender = taskObject.renderTask();
+          $("h2").html("All Overdue Tasks");
+          $(".row").prepend(taskRender);
+        })
+      });
+  });
+}
+
+function getAllTasks() {
+  $('#all').on("click", function(e) {
+    $.ajax({
+      url: '/tasks/all',
+      method: "GET",
+      dataType: 'JSON'
+    }).success(function(data) {
+        $(".row").html("");
+        $.each(data, function(index, task){
+          var taskObject = new Task(task);
+          taskObject.overdueCheck();
+          taskObject.completeCheck();
+          taskObject.assignUsers(task.assigned_users);
+          var taskRender = taskObject.renderTask();
+          $("h2").html("All Tasks");
+          $(".row").prepend(taskRender);
+        })
+      });
+  });
+}
+
 $(document).ready(function(){
   Task.templateSource = $("#tasksTemplate").html();
   Task.template = Handlebars.compile(Task.templateSource); 
   getActiveTasks();
   getCompleteTasks();
+  getOverdueTasks();
+  getAllTasks();
 });
