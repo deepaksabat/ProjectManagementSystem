@@ -63,6 +63,26 @@ function getActiveTasks() {
   });
 }
 
+function getCompleteTasks() {
+  $('#complete-tasks').on("click", function(e) {
+    $.ajax({
+      url: '/tasks/all-complete-tasks',
+      method: "GET",
+      dataType: 'JSON'
+    }).success(function(data) {
+        $(".row").html("");
+        $.each(data, function(index, task){
+          var taskObject = new Task(task);
+          taskObject.overdueCheck();
+          taskObject.completeCheck();
+          taskObject.assignUsers(task.assigned_users);
+          var taskRender = taskObject.renderTask()
+          $(".row").prepend(taskRender);
+        })
+      });
+  });
+}
+
 $(document).ready(function(){
   Task.templateSource = $("#activeTasksTemplate").html();
   Task.template = Handlebars.compile(Task.templateSource); 
