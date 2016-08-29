@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task
   before_action :set_project
   before_action :project_task_statuses_count, only: [:index, :complete, :overdue]
-  before_action :all_task_statuses_count, only: [:all_active_tasks, :all_complete_tasks, :all_overdue_tasks]
+  before_action :all_task_statuses_count, only: [:all]
 
   ## STANDARD RESTFUL ACTIONS
 
