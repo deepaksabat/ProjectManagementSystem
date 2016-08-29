@@ -82,28 +82,19 @@ class TasksController < ApplicationController
   def all_active_tasks
     @tasks = (@user.tasks.active + @user.assigned_tasks.active).uniq
     @tasks.flatten!
-    respond_to do |format|
-      format.html {render :all_active_tasks}
-      format.json {render json: @tasks}
-    end
+    render json: @tasks
   end
 
   def all_complete_tasks
     @tasks = (@user.tasks.complete + @user.assigned_tasks.complete).uniq
     @tasks.flatten!
-    respond_to do |format|
-      format.html {render :all_active_tasks}
-      format.json {render json: @tasks}
-    end
+    render json: @tasks
   end
 
   def all_overdue_tasks
     @tasks = (@user.tasks.overdue + @user.assigned_tasks.overdue).uniq
     @tasks.flatten!
-    respond_to do |format|
-      format.html {render :all_active_tasks}
-      format.json {render json: @tasks}
-    end
+    render json: @tasks
   end
   
   def all
