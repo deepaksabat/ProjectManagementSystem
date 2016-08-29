@@ -84,7 +84,7 @@ function getCompleteTasks() {
 }
 
 $(document).ready(function(){
-  Task.templateSource = $("#activeTasksTemplate").html();
+  Task.templateSource = $("#tasksTemplate").html();
   Task.template = Handlebars.compile(Task.templateSource); 
   getActiveTasks();
   getCompleteTasks();
