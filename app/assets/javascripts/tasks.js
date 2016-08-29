@@ -30,7 +30,7 @@ class Task {
   }
 
   renderTask() {
-    return Task.template(this);
+    return template(this);
   }
 
   assignUsers(userArray) {
@@ -142,8 +142,8 @@ function getAllTasks() {
 }
 
 $(document).ready(function(){
-  Task.templateSource = $("#tasksTemplate").html();
-  Task.template = Handlebars.compile(Task.templateSource); 
+  source = $("#template").html();
+  template = Handlebars.compile(source); 
   getActiveTasks();
   getCompleteTasks();
   getOverdueTasks();

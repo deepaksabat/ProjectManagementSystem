@@ -24,7 +24,7 @@ function formatDate(date) {
 }
 
 Comment.prototype.renderComment = function (){
-  return Comment.template({content: this.content, id: this.id, createdAt: this.friendlyDate()});
+  return template({content: this.content, id: this.id, createdAt: this.friendlyDate()});
 }
 
 function newComment() {
@@ -42,7 +42,9 @@ function newComment() {
 
 
 $(document).ready(function(){
-  // Comment.templateSource = $("#commentTemplate").html();
-  // Comment.template = Handlebars.compile(Comment.templateSource); 
-  // newComment();
+  if ($("#template") !== undefined ) {
+    source = $("#template").html();
+    template = Handlebars.compile(source); 
+    newComment();
+  }
 });

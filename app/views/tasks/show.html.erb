@@ -52,7 +52,7 @@
 </div> <!-- Row end -->
 
 
-<script id="commentTemplate" type="text/x-handlebars-template">
+<script id="template" type="text/x-handlebars-template">
   <div class="comment-template-js" id="{{comment-id}}">
     <p> Posted: {{createdAt}} by <%= @comment.user.name %></p>
     <p>On <%= link_to @comment.task.name, task_path(@comment.task) %> in <%= link_to @comment.task.project.name, project_path(@comment.task.project) %></p>
