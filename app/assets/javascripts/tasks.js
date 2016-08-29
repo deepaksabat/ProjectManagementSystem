@@ -18,7 +18,8 @@ class Task {
   overdueCheck() {
     var createdDate = new Date(this.createdAt);
     var currentDate = new Date();
-    if (createdDate < currentDate) {
+    debugger
+    if (createdDate < currentDate && this.status !== "complete") {
       this.overdue = "Overdue";
     }
   }
@@ -53,8 +54,9 @@ function getActiveTasks() {
         $(".row").html("");
         $.each(data, function(index, task){
           var taskObject = new Task(task);
-          taskObject.overdueCheck();
           taskObject.completeCheck();
+          taskObject.overdueCheck();
+          
           taskObject.assignUsers(task.assigned_users);
           var taskRender = taskObject.renderTask()
           $("h2").html("All Active Tasks");
