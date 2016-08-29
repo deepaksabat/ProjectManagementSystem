@@ -57,6 +57,7 @@ function getActiveTasks() {
           taskObject.completeCheck();
           taskObject.assignUsers(task.assigned_users);
           var taskRender = taskObject.renderTask()
+          $("h2").html("All Active Tasks");
           $(".row").prepend(taskRender);
         })
       });
@@ -76,7 +77,8 @@ function getCompleteTasks() {
           taskObject.overdueCheck();
           taskObject.completeCheck();
           taskObject.assignUsers(task.assigned_users);
-          var taskRender = taskObject.renderTask()
+          var taskRender = taskObject.renderTask();
+          $("h2").html("All Complete Tasks");
           $(".row").prepend(taskRender);
         })
       });
