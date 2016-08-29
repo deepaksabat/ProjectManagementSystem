@@ -12,6 +12,7 @@ class Task {
     this.projectID = attributes.project.id;
     this.overdue = "";
     this.complete = "";
+    this.assignedUsers = "";
   }
 
   overdueCheck() {
@@ -32,12 +33,13 @@ class Task {
     return Task.template(this);
   }
 
-  assignUsers() {
+  assignUsers(userArray) {
     var names = "";
-    $.each(attributes.assigned_users, function(index, user){
-      names = names + user.name + " ";
+    $.each(userArray, function(index, user){
+      names = names + user.name + ", ";
     });
-    return names;
+    this.assignedUsers = names;
+    return this.assignedUsers;
   }
 }
 
@@ -50,10 +52,11 @@ function getActiveTasks() {
     }).success(function(data) {
         $(".row").html("");
         $.each(data, function(index, task){
-          var task = new Task(task);
-          task.overdueCheck();
-          task.completeCheck();
-          var taskRender = task.renderTask()
+          var taskObject = new Task(task);
+          taskObject.overdueCheck();
+          taskObject.completeCheck();
+          taskObject.assignUsers(task.assigned_users);
+          var taskRender = taskObject.renderTask()
           $(".row").prepend(taskRender);
         })
       });
