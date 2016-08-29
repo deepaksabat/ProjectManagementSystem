@@ -18,7 +18,6 @@ class Task {
   overdueCheck() {
     var createdDate = new Date(this.createdAt);
     var currentDate = new Date();
-    debugger
     if (createdDate < currentDate && this.status !== "complete") {
       this.overdue = "Overdue";
     }
@@ -42,6 +41,17 @@ class Task {
     this.assignedUsers = names;
     return this.assignedUsers;
   }
+
+  selfAssignCheck(userArray){
+    var email = $("#email").text().slice(14, this.length);
+    var assignment = "" ;
+    $.each(userArray, function(index, user){
+      if (user.email === email){
+        assignment = true;
+      }
+    });
+    return assignment;
+  }
 }
 
 function getActiveTasks() {
@@ -56,11 +66,13 @@ function getActiveTasks() {
           var taskObject = new Task(task);
           taskObject.completeCheck();
           taskObject.overdueCheck();
-          
-          taskObject.assignUsers(task.assigned_users);
+          taskObject.assignUsers(task.assigned_users);          
           var taskRender = taskObject.renderTask()
           $("h2").html("All Active Tasks");
           $(".row").prepend(taskRender);
+          if (taskObject.selfAssignCheck(task.assigned_users) === true){
+            $("#self-assign").text("Assigned to you");
+          }
         })
       });
   });
