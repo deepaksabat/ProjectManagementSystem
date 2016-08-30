@@ -38,7 +38,6 @@ function newComment() {
   $('#new_comment').submit(function(event) {
     event.preventDefault();
     var values = $(this).serialize();
-    debugger
     $.post('/projects/1/comments',values).success(function(data) {
         var comment = new Comment(data);
         var commentRender = comment.renderComment()
@@ -66,18 +65,20 @@ function editComment() {
 }
 
 function updateComment() {
-  $(document).on( "submit", "#save-comment", function() {
+  $(document).on("submit", ".save-comment", function(event) {
     event.preventDefault();
     var values = $(this).serialize();
-    var id = $(event.target)[0].id;
-    debugger
+    var id = $(event.target)[0].id
+    var url =  "/comments/" + id.slice(13, id.length);
     $.ajax({
-      url: "/comments/" + id,
+      url:  url,
       method: "POST",
       dataType: 'JSON',
       data: values
     }).success(function(data) {
-      alert("hello")
+      var comment = new Comment(data);
+      debugger
+      console.log(data);
     });
   }); 
 }

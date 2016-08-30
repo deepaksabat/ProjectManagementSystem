@@ -41,8 +41,13 @@ class CommentsController < ApplicationController
 
   def update
     authorize @comment
-    @comment.update(comment_params)
-    render json: @comment
+     if @comment.update(comment_params)
+      @task = @comment.task
+      render json: @comment
+    else
+      @comments = @task.comments
+      render 'tasks/show'
+    end
   end
 
   def destroy
