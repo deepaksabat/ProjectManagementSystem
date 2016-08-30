@@ -33,6 +33,10 @@ class CommentsController < ApplicationController
 
   def edit
     authorize @comment
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @comment}
+    end
   end
 
   def update
