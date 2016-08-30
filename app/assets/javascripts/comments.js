@@ -52,11 +52,10 @@ function editComment() {
       method: "GET",
       dataType: 'JSON'
     }).done(function(data) {
-      alert("hello!");
-      console.log(data);
+      var id = '#' + data.id;
+      $(id).html("hello!");
     });
   });
-
 }
 
 
