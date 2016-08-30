@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   
   enum role: [:user, :admin]
 
-  has_attached_file :avatar, default_url: ':style/default.png', styles: { thumb: "100x100>" }
+  has_attached_file :avatar, default_url: ':style/default.png', styles: { thumb: "100x100>", icon: "30X30>" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def self.from_omniauth(auth)

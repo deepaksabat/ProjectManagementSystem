@@ -26,6 +26,19 @@
   border-radius: 100px;
 }
 
+#profile-icon{
+  vertical-align: middle;
+  border-radius: 100px;
+  position: relative;
+  top: -5px;
+  margin-right: 10px;
+  float: left;
+}
+
+#email {
+  // float: right;
+}
+
 .alert-block {
   background-color: #eee;
   padding: 20px 25px;
