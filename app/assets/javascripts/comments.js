@@ -62,6 +62,23 @@ function editComment() {
       $(id).html(commentRender);
     });
   });
+  updateComment();
+}
+
+function updateComment() {
+  $("#save-comment").on('submit', function(event) {
+    debugger
+    event.preventDefault();
+    var values = $(this).serialize();
+    // $.ajax({
+    //   url: "/comments/",
+    //   method: "POST",
+    //   dataType: 'JSON',
+    //   data: values
+    // }).done(function(data) {
+    //   alert("hello")
+    // });
+  });
 }
 
 
@@ -72,7 +89,7 @@ function compileNewCommentTemplate(){
   }
 }
 
-function compilEditCommentTemplate(){
+function compileEditCommentTemplate(){
   var editSource = $("#editCommentTemplate").html();
   if ( editSource !== undefined ) {
     editTemplate = Handlebars.compile(editSource); 
@@ -81,7 +98,8 @@ function compilEditCommentTemplate(){
 
 $(document).ready(function(){
   compileNewCommentTemplate();
-  compilEditCommentTemplate();
+  compileEditCommentTemplate();
   newComment();
   editComment();
+  updateComment();
 });
