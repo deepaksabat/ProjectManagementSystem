@@ -47,14 +47,13 @@ function editComment() {
   $('#edit-comment').click(function(event) {
     event.preventDefault();
     var href = $(this).attr('href');
-    debugger
     $.ajax({
       url: href,
       method: "GET",
       dataType: 'JSON'
     }).done(function(data) {
-      
       alert("hello!");
+      console.log(data);
     });
   });
 
