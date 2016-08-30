@@ -41,6 +41,8 @@ gem 'rails-rename', '~> 1.0.0'
 
 gem 'active_model_serializers'
 
+gem 'paperclip'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
