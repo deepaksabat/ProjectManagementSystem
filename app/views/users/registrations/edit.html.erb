@@ -4,7 +4,7 @@
 
   <p><%= @user.email%></p>
 
-  <p> <%= image_tag @user.avatar.url(:thumb) %> </p>
+  <p> <%= image_tag @user.avatar.url(:thumb), id: "profile-image" %> </p>
 
   <input type="button" class="btn btn-primary" id="show-profile-options" value="Edit Profile">
 
