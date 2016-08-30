@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
   def update
     authorize @comment
     @comment.update(comment_params)
-    redirect_to task_path(@task)
+    render json: @comment
   end
 
   def destroy

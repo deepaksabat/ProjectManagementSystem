@@ -53,10 +53,10 @@
 
 
 <script id="editCommentTemplate" type="text/x-handlebars-template">
-  <form class="button_to" method="post" action="/comments/{{id}}">
+  <form class="button_to" method="post" action="/comments/{{id}}" id="save-comment">
     <input type="hidden" name="_method" value="patch" />
     <textarea class="comment-text-field form-control" rows="3"></textarea>
-    <input class="btn btn-sm btn-primary" type="submit" value="Save" id="save-comment"/>
+    <input class="btn btn-sm btn-primary" type="submit" value="Save" />
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   </form>   
 </script>

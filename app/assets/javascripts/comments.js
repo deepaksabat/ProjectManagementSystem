@@ -38,6 +38,7 @@ function newComment() {
   $('#new_comment').submit(function(event) {
     event.preventDefault();
     var values = $(this).serialize();
+    debugger
     $.post('/projects/1/comments',values).success(function(data) {
         var comment = new Comment(data);
         var commentRender = comment.renderComment()
@@ -62,23 +63,23 @@ function editComment() {
       $(id).html(commentRender);
     });
   });
-  updateComment();
 }
 
 function updateComment() {
-  $("#save-comment").on('submit', function(event) {
-    debugger
+  $(document).on( "submit", "#save-comment", function() {
     event.preventDefault();
     var values = $(this).serialize();
-    // $.ajax({
-    //   url: "/comments/",
-    //   method: "POST",
-    //   dataType: 'JSON',
-    //   data: values
-    // }).done(function(data) {
-    //   alert("hello")
-    // });
-  });
+    var id = $(event.target)[0].id;
+    debugger
+    $.ajax({
+      url: "/comments/" + id,
+      method: "POST",
+      dataType: 'JSON',
+      data: values
+    }).success(function(data) {
+      alert("hello")
+    });
+  }); 
 }
 
 
