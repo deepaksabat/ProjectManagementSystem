@@ -59,7 +59,8 @@ function editComment() {
       var comment = new Comment(data);
       var commentRender = comment.renderEditComment()
       var id = '#' + data.id;
-      $(id).html(commentRender);
+      $(id + ' .comment-content').html(commentRender);
+      $(id + ' textarea').val(comment.content);
     });
   });
 }
@@ -77,8 +78,8 @@ function updateComment() {
       data: values
     }).success(function(data) {
       var comment = new Comment(data);
-      debugger
-      console.log(data);
+      var id = "#" + comment.id;
+      $(id + ' .comment-content').html(comment.content);
     });
   }); 
 }
