@@ -28,6 +28,10 @@ class Comment {
     return template({content: this.content, id: this.id, createdAt: this.friendlyDate()});
   }
 
+  renderEditComment(){
+    return editTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
+  }
+
 }
 
 function newComment() {
@@ -52,23 +56,32 @@ function editComment() {
       method: "GET",
       dataType: 'JSON'
     }).done(function(data) {
+      var comment = new Comment(data);
+      var commentRender = comment.renderEditComment()
       var id = '#' + data.id;
-      $(id).html("hello!");
+      $(id).html(commentRender);
     });
   });
 }
 
 
-function compileTemplate(){
+function compileNewCommentTemplate(){
   var source = $("#template").html();
   if ( source !== undefined ) {
-    alert("helo")
     template = Handlebars.compile(source); 
   }
 }
 
+function compilEditCommentTemplate(){
+  var editSource = $("#editCommentTemplate").html();
+  if ( editSource !== undefined ) {
+    editTemplate = Handlebars.compile(editSource); 
+  }
+}
+
 $(document).ready(function(){
-  compileTemplate();
+  compileNewCommentTemplate();
+  compilEditCommentTemplate();
   newComment();
   editComment();
 });
