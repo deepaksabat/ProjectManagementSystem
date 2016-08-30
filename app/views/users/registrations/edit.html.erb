@@ -1,12 +1,26 @@
 <div class="default-block">
 
-  <h2><%= @user.name %></h2>
+  <div class="row">
+    <div class="col-md-2">
+    <br/>
+      <p> <%= image_tag @user.avatar.url(:thumb), id: "profile-image" %> </p>
+    </div>
 
-  <p><%= @user.email%></p>
+    <div class="col-md-10">
+      <h2><%= @user.name %></h2>
 
-  <p> <%= image_tag @user.avatar.url(:thumb), id: "profile-image" %> </p>
+      <p><%= @user.email%></p>
 
-  <input type="button" class="btn btn-primary" id="show-profile-options" value="Edit Profile">
+      <p><input type="button" class="btn btn-primary" id="show-profile-options" value="Edit Profile"></p>
+    </div>
+  </div>
+
+
+ 
+
+  
+
+  
 
   <div class="profile-options">
 
