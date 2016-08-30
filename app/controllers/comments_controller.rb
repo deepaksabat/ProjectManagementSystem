@@ -33,12 +33,21 @@ class CommentsController < ApplicationController
 
   def edit
     authorize @comment
+    respond_to do |format|
+      format.html {render :edit}
+      format.json {render json: @comment}
+    end
   end
 
   def update
     authorize @comment
-    @comment.update(comment_params)
-    redirect_to task_path(@task)
+     if @comment.update(comment_params)
+      @task = @comment.task
+      render json: @comment
+    else
+      @comments = @task.comments
+      render 'tasks/show'
+    end
   end
 
   def destroy
