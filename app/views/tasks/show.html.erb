@@ -52,13 +52,18 @@
 </div> <!-- Row end -->
 
 
-<script id="editCommentTemplate" type="text/x-handlebars-template">
-  <form class="button_to" method="post" action="/comments/{{id}}" id="save-comment">
+<script id="editCommentTemplate" type="text/x-handlebars-template"> 
+  <form class="edit_comment" id="edit_comment_{{id}}" action="/comments/{{id}}" accept-charset="UTF-8" method="post">
+    <input name="utf8" type="hidden" value="&#x2713;" />
     <input type="hidden" name="_method" value="patch" />
-    <textarea class="comment-text-field form-control" rows="3"></textarea>
-    <input class="btn btn-sm btn-primary" type="submit" value="Save" />
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  </form>   
+    <div class="form-group">  
+      <textarea class="comment-text-field form-control" rows="3" name="comment[content]" id="comment_content"></textarea>
+    </div>  
+    <div class="form-group">
+      <input type="submit" name="commit" value="Update Comment" class="btn btn-primary" />
+    </div>
+  </form>
 </script>
 
 <script id="template" type="text/x-handlebars-template">
