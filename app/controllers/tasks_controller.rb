@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task
   before_action :set_project
   before_action :project_task_statuses_count, only: [:index, :complete, :overdue]
-  before_action :all_task_statuses_count, only: [:all_active_tasks, :all_complete_tasks, :all_overdue_tasks]
+  before_action :all_task_statuses_count, only: [:all]
 
   ## STANDARD RESTFUL ACTIONS
 
@@ -11,6 +11,10 @@ class TasksController < ApplicationController
     @task = Task.new(project_id: @project.id)
     authorize @task
     @tasks = @project.active_tasks
+    respond_to do |format|
+      format.html {render :index}
+      format.json {render json: @tasks}
+    end
   end
 
   def new
@@ -36,6 +40,10 @@ class TasksController < ApplicationController
     @comments = @task.comments.reverse
     @assigned_users = @task.assigned_users
     @tags = @task.tags
+    respond_to do |format|
+      format.html {render :show}
+      format.json {render json: @task}
+    end
   end
 
   def edit
@@ -74,16 +82,28 @@ class TasksController < ApplicationController
   def all_active_tasks
     @tasks = (@user.tasks.active + @user.assigned_tasks.active).uniq
     @tasks.flatten!
+    render json: @tasks
   end
 
   def all_complete_tasks
     @tasks = (@user.tasks.complete + @user.assigned_tasks.complete).uniq
     @tasks.flatten!
+    render json: @tasks
   end
 
   def all_overdue_tasks
     @tasks = (@user.tasks.overdue + @user.assigned_tasks.overdue).uniq
     @tasks.flatten!
+    render json: @tasks
+  end
+  
+  def all
+    @tasks = (@user.tasks + @user.assigned_tasks).uniq
+    @tasks.flatten!
+    respond_to do |format|
+      format.html {render :all }
+      format.json {render json: @tasks }
+    end
   end
 
   def quick_new_task

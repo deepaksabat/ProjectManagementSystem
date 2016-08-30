@@ -1,0 +1,51 @@
+<%= render partial: "all_task_options", locals:{overdue: @overdue, active: @active, complete: @complete} %>
+
+<div class="task-block">
+  <h2>All Tasks</h2>
+  <div class="line-dark"></div>
+  <% if @tasks.empty? %>
+    <h4>It looks like you don't have any tasks. Why not create new one?</h4>
+  <% else %>
+    <div class="row">
+      <% @tasks.each_with_index do |task, index| %>
+        <%= render partial: "task", locals: {task: task, index: index } %>
+      <%end %>
+    </div>
+  <% end %>
+</div>
+
+
+
+<script id="template" type="text/x-handlebars-template">
+  <div class="tasks-template-js col-md-4" id="{{id}}">
+    <h3> <a href="/tasks/{{id}}">{{name}} </a> </h3>
+    <p> <span class="overdue"> {{overdue}} </span> </p>
+    <p> <span class="complete"> {{complete}} </span>  </p>
+    <p class="collaborator-text" id="self-assign"></p>
+    <p> {{description}} </p>
+    <p> Created: {{createdAt}} </p>
+    <p> Owner: {{ownerName}} </p>
+    <p> Due: {{dueDate}} </p>
+    <p> Assigned to: {{assignedUsers}} </p>
+    <p> Status: {{status}} </p>
+    <p> <a href="/tasks/{{id}}">{{commentCount}} Comments </a> </p>
+    <p> Belongs to: <a href="/projects/{{projectId}}">{{projectName}} </p>
+    <div class="inline-button">
+      <a href="/tasks/{{id}}" class="btn btn-default">View Task</a>
+    </div>
+    <div class="inline-button">
+      <a href="/tasks/{{id}}/edit" class="btn btn-default">Edit Task</a>
+    </div>
+    <div class="inline-button">
+       <form class="edit_task" id="edit_task_{{id}}" action="/tasks/{{id}}" accept-charset="UTF-8" method="post">
+        <input name="utf8" type="hidden" value="&#x2713;" />
+        <input type="hidden" name="_method" value="patch" />
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input value="<%= @user.id %>" type="hidden" name="task[owner_id]" id="task_owner_id" />
+        <input value="complete" type="hidden" name="task[status]" id="task_status" />
+        <input type="submit" name="commit" value="Mark Complete" class="btn btn-sm btn-success" />
+      </form>
+    </div>
+    <div class="line-light"></div>
+  </div>
+</script> 
