@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   
   enum role: [:user, :admin]
 
+  has_attached_file :avatar
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
