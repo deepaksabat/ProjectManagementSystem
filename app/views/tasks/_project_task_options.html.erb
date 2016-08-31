@@ -17,9 +17,11 @@
 
   <%= form_tag(project_tasks_path(project), method: "get", id: "filter-tasks-js") do %>
   <%= label_tag(:status, "Filter by:") %>
-  <%= select_tag "status", '<option value="0">active</option><option value="1">complete</option>'.html_safe %>
-   <%= label_tag(:assigned, "Assigned:") %>
-  <%= select_tag "assigned", "<option>All</option><option>To You</option><option>To Others</option>".html_safe %>
-  <%= submit_tag("Filter") %>
+    <%= select_tag "status", '<option value="0">All</option><option value="0">Active</option><option value="1">Complete</option>'.html_safe %>
+  <%= label_tag(:assigned, "Assigned:") %>
+    <%= select_tag "assigned", "<option>All</option><option>To You</option><option>To Others</option>".html_safe %>
+  <%= label_tag(:due, "Due:") %>
+    <%= select_tag "due", "<option>All</option><option>Overdue</option>".html_safe %>
+  <%= submit_tag("Filter", class: "btn btn-default td-button") %>
 <% end %>
 </div>
