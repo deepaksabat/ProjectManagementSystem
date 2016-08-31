@@ -1,3 +1,8 @@
+$(document).ready(function(){
+  compileTemplate();
+  getTasks();
+});
+
 class Task {
   constructor(attributes){
     this.id = attributes.id;
@@ -129,8 +134,3 @@ function formatTitle(str){
   }
   return newArray.join(" ");
 }
-
-$(document).ready(function(){
-  compileTemplate();
-  getTasks();
-});
