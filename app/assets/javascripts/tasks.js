@@ -70,11 +70,11 @@ function getTasks() {
     event.preventDefault();
     var path = $(event.target).attr('href');
     var title = $(event.target).text();
-    debugger
     fetchTasks(path, title);
   });
 }
 
+// fetch tasks based on path
 function fetchTasks(url, title){
   $.ajax({
     url: url,
@@ -82,39 +82,6 @@ function fetchTasks(url, title){
     dataType: 'JSON'
   }).success(function(data) {
     renderResponse(data, title);
-  });
-}
-
-// if the user wants to see all tasks
-function getAllTasks(){
-  var route = "All Tasks";
-  $.ajax({
-    url: '/tasks/all',
-    method: "GET",
-    dataType: 'JSON'
-  }).success(function(data) {
-    renderResponse(data, route);
-  });
-}
-
-// if the users wants to see a particular group of tasks
-function getRouteTasks(route){
-  $.ajax({
-    url: '/tasks/all' + '-' + route,
-    method: "GET",
-    dataType: 'JSON'
-  }).success(function(data) {
-    renderResponse(data, route);
-  });
-}
-
-function getRouteTasks(route){
-  $.ajax({
-    url: '/tasks/all' + '-' + route,
-    method: "GET",
-    dataType: 'JSON'
-  }).success(function(data) {
-    renderResponse(data, route);
   });
 }
 
