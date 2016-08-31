@@ -76,11 +76,12 @@ function getTasks() {
 
 // fetch tasks based on path
 function fetchTasks(url, title){
+  debugger
   $.ajax({
     url: url,
     method: "GET",
     dataType: 'JSON'
-  }).done(function(data) {
+  }).success(function(data) {
     var newTitle = formatTitle(title);
     $('h2').html(newTitle);
     renderResponse(data);

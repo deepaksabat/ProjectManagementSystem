@@ -1,10 +1,11 @@
 <%= render partial: "project_task_options", locals:{overdue: @overdue, active: @active, complete: @complete} %>
 
 <div class="default-block">
-  <h2>Your Tasks</h2>
+  <h2>Active Tasks</h2>
   <div class="line-dark"></div>
   <% if @tasks.empty? %>
-    <h4>It looks like you don't have any tasks. Why not create new one?</h4>
+    <div class="row">
+    </div>
   <% else %>
     <div class="row">
       <div class="active-tasks">
@@ -37,7 +38,7 @@
       <a href="/tasks/{{id}}/edit" class="btn btn-default">Edit Task</a>
     </div>
     <div class="inline-button">
-       <form class="edit_task" id="edit_task_{{id}}" action="/tasks/{{id}}" accept-charset="UTF-8" method="post">
+      <form class="edit_task" id="edit_task_{{id}}" action="/tasks/{{id}}" accept-charset="UTF-8" method="post">
         <input name="utf8" type="hidden" value="&#x2713;" />
         <input type="hidden" name="_method" value="patch" />
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
