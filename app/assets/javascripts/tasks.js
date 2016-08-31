@@ -44,7 +44,7 @@ class Task {
 
   selfAssignCheck(userArray){
     var email = $("#email").text().slice(14, this.length);
-    var assignment = "" ;
+    var assignment = false ;
     $.each(userArray, function(index, user){
       if (user.email === email){
         assignment = true;
@@ -94,8 +94,9 @@ function renderResponse(data, route) {
     taskObject.overdueCheck();
     taskObject.completeCheck();
     taskObject.assignUsers(task.assigned_users);
+    var title = formatTitle(route);
+    $('h2').html( title );
     var taskRender = taskObject.renderTask();
-    $("h2").html(route);
     $(".row").prepend(taskRender);
     if (taskObject.selfAssignCheck(task.assigned_users) === true){
       $("#self-assign").text("Assigned to you");
@@ -108,6 +109,15 @@ function compileTemplate(){
   if ( source !== undefined ) {
     template = Handlebars.compile(source); 
   }
+}
+
+function formatTitle(str){
+  var array = str.replace(/[-]/, " ").split(" ");
+  var newArray = [];
+  for (var i = 0; i < array.length; i++) {
+    newArray[i] = array[i].charAt(0).toUpperCase() + array[i].substr(1);
+  }
+  return newArray.join(" ");
 }
 
 $(document).ready(function(){
