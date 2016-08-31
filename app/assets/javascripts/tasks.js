@@ -108,6 +108,7 @@ function fetchTasks(url, values){
   }).success(function(data) {
     console.log(data);
     $(".row").html("");
+    $('h2').text(data.length + " Tasks");
     renderResponse(data);
   });
 }

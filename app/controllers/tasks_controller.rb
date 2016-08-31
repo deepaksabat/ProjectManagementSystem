@@ -14,14 +14,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html {render :index}
       format.json do
-        @tasks = Task.where(status: params[:status], project_id: @project.id)
-        if params[:assigned] == "To You"
-          @tasks = @tasks.map {|t| t.assigned_users.include?(current_user) ? t : false}
-        elsif params[:assigned] == "To Others"
-          @tasks = @tasks.map {|t| !t.assigned_users.include?(current_user) ? t : false}
-        else
-          @tasks
-        end
+        @tasks = Task.filter(@user, @project, params)
         render json: @tasks
       end
     end

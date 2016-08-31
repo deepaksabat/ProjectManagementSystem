@@ -1,7 +1,7 @@
 <%= render partial: "project_task_options", locals:{overdue: @overdue, active: @active, complete: @complete, project: @project} %>
 
 <div class="default-block">
-  <h2>Active Tasks</h2>
+  <h2><%= @tasks.count %> Tasks</h2>
   <div class="line-dark"></div>
   <% if @tasks.empty? %>
     <div class="row">
