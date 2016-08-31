@@ -80,21 +80,21 @@ function fetchTasks(url, title){
     url: url,
     method: "GET",
     dataType: 'JSON'
-  }).success(function(data) {
-    renderResponse(data, title);
+  }).done(function(data) {
+    var newTitle = formatTitle(title);
+    $('h2').html(newTitle);
+    renderResponse(data);
   });
 }
 
 // render the AJAX response to the page
-function renderResponse(data, route) {
+function renderResponse(data) {
   $(".row").html("");
   $.each(data, function(index, task){
     var taskObject = new Task(task);
     taskObject.overdueCheck();
     taskObject.completeCheck();
     taskObject.assignUsers(task.assigned_users);
-    var title = formatTitle(route);
-    $('h2').html( title );
     var taskRender = taskObject.renderTask();
     $(".row").prepend(taskRender);
     if (taskObject.selfAssignCheck(task.assigned_users) === true){
