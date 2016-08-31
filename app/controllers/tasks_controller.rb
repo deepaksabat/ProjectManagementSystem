@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html {render :index}
       format.json do
-        @tasks = Task.filter(@user, @project, params)
+        @tasks = Task.project_tasks_filter(@user, @project, params)
         render json: @tasks
       end
     end

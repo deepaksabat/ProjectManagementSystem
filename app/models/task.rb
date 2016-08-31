@@ -42,7 +42,7 @@ class Task < ActiveRecord::Base
     self.due_date < Date.today ? true : false
   end
 
-  def self.filter(user, project, params)
+  def self.project_tasks_filter(user, project, params)
     if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
       tasks = project.tasks
       return tasks
