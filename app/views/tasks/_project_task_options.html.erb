@@ -15,9 +15,9 @@
     <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger js-filter", id: "overdue-tasks" %>
   </div>
 
-  <%= form_tag(project_tasks_path(project), method: "get") do %>
+  <%= form_tag(project_tasks_path(project), method: "get", id: "filter-tasks-js") do %>
   <%= label_tag(:status, "Filter by:") %>
-  <%= select_tag "status", "<option>Active</option><option>Complete</option>".html_safe %>
+  <%= select_tag "status", '<option value="0">active</option><option value="1">complete</option>'.html_safe %>
    <%= label_tag(:assigned, "Assigned:") %>
   <%= select_tag "assigned", "<option>All</option><option>To You</option><option>To Others</option>".html_safe %>
   <%= submit_tag("Filter") %>

@@ -65,32 +65,59 @@ class Task {
 }
 
 // master getTask function, triggered when a filter button is clicked
+// function getTasks() {
+//   $('.js-filter).on("click", function(event) {
+//     event.preventDefault();
+//     
+//     var path = $(event.target).attr('href');
+//     var title = $(event.target).text();
+//     fetchTasks(path, title);
+//   });
+// }
+
 function getTasks() {
-  $('.js-filter').on("click", function(event) {
+  $('#filter-tasks-js').on("submit", function(event) {
     event.preventDefault();
-    var path = $(event.target).attr('href');
-    var title = $(event.target).text();
-    fetchTasks(path, title);
+    var url = $(event.target).attr('action')
+    var values = $(this).serialize();
+    fetchTasks(url, values);
   });
 }
 
+
 // fetch tasks based on path
-function fetchTasks(url, title){
-  debugger
+// function fetchTasks(url, title){
+//   debugger
+//   $.ajax({
+//     url: url,
+//     method: "GET",
+//     dataType: 'JSON'
+//   }).success(function(data) {
+//     var newTitle = formatTitle(title);
+//     $('h2').html(newTitle);
+//     renderResponse(data);
+//   });
+// }
+
+function fetchTasks(url, values){
   $.ajax({
     url: url,
     method: "GET",
+    data: values,
     dataType: 'JSON'
   }).success(function(data) {
-    var newTitle = formatTitle(title);
-    $('h2').html(newTitle);
+    console.log(data);
+    $(".row").html("");
     renderResponse(data);
   });
 }
 
+function filterData(data) {
+
+}
+
 // render the AJAX response to the page
 function renderResponse(data) {
-  $(".row").html("");
   $.each(data, function(index, task){
     var taskObject = new Task(task);
     taskObject.overdueCheck();
