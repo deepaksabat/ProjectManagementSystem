@@ -72,10 +72,12 @@ class TasksController < ApplicationController
   # PROJECT TASKS 
   def complete
     @tasks = @project.complete_tasks
+    render json: @tasks
   end
 
   def overdue
     @tasks = @project.overdue_tasks
+    render json: @tasks
   end
 
   # ALL USER RELATED TASKS
