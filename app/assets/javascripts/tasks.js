@@ -15,6 +15,7 @@ class Task {
     this.assignedUsers = "";
   }
 
+  // Check if the task is overdue
   overdueCheck() {
     var createdDate = new Date(this.createdAt);
     var currentDate = new Date();
@@ -23,16 +24,19 @@ class Task {
     }
   }
 
+  // Check if the task is complete
   completeCheck() {
     if (this.status === "complete") {
       this.complete = "Complete";
     }
   }
 
+  // Render the handlebars template
   renderTask() {
     return template(this);
   }
 
+  // Iterate over the assigned users array and create a string of users
   assignUsers(userArray) {
     var names = "";
     $.each(userArray, function(index, user){
@@ -42,9 +46,10 @@ class Task {
     return this.assignedUsers;
   }
 
+  // Check if the current user is assigned to the task
   selfAssignCheck(userArray){
-    var email = $("#email").text().slice(14, this.length);
-    var assignment = false ;
+    var email = $("#email").text().slice(0, this.length);
+    var assignment 
     $.each(userArray, function(index, user){
       if (user.email === email){
         assignment = true;
@@ -54,6 +59,7 @@ class Task {
   }
 }
 
+// master getTask function, triggered when a filter button is clicked
 function getTasks() {
   $('.js-filter').on("click", function(e) {
     var route = $(event.target)[0].id
@@ -65,6 +71,7 @@ function getTasks() {
   });
 }
 
+// if the user wants to see all tasks
 function getAllTasks(){
   var route = "All Tasks";
   $.ajax({
@@ -76,6 +83,7 @@ function getAllTasks(){
   });
 }
 
+// if the users wants to see a particular group of tasks
 function getRouteTasks(route){
   $.ajax({
     url: '/tasks/all' + '-' + route,
@@ -86,7 +94,7 @@ function getRouteTasks(route){
   });
 }
 
-
+// render the AJAX response to the page
 function renderResponse(data, route) {
   $(".row").html("");
   $.each(data, function(index, task){
@@ -104,6 +112,7 @@ function renderResponse(data, route) {
   })
 }
 
+// compile the handlebars template on document load
 function compileTemplate(){
   source = $("#template").html();
   if ( source !== undefined ) {
@@ -111,6 +120,7 @@ function compileTemplate(){
   }
 }
 
+// format the page title after an AJAX request
 function formatTitle(str){
   var array = str.replace(/[-]/, " ").split(" ");
   var newArray = [];
