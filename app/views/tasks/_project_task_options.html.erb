@@ -5,15 +5,6 @@
   <div class="inline-button">
     <%= link_to "New Task", new_project_task_path(@project), class: "btn btn-default td-button" %>
   </div>
-  <div class="inline-button">
-    <%= link_to "Active Tasks ( #{active} )", project_tasks_path(@project), class: "btn btn-warning js-filter", id: "active-tasks"%> 
-  </div>
-  <div class="inline-button">
-    <%= link_to "Complete Tasks ( #{complete} )", complete_project_tasks_path(@project), class: "btn btn-success js-filter", id: "complete-tasks"  %>
-  </div>
-  <div class="inline-button">
-    <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger js-filter", id: "overdue-tasks" %>
-  </div>
 
   <%= form_tag(project_tasks_path(project), method: "get", id: "filter-tasks-js") do %>
   <%= label_tag(:status, "Filter by:") %>
