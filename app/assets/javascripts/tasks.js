@@ -56,25 +56,33 @@ class Task {
 
 function getTasks() {
   $('.js-filter').on("click", function(e) {
-    if ($(event.target)[0].id === "all"){
-      var title = "All Tasks";
-      $.ajax({
-        url: '/tasks/all',
-        method: "GET",
-        dataType: 'JSON'
-      }).success(function(data) {
-        renderResponse(data, title);
-      });
+    var route = $(event.target)[0].id
+    if ( route === "all"){
+      getAllTasks();
     } else {
-      var route = $(event.target)[0].id
-      $.ajax({
-        url: '/tasks/all' + '-' + route,
-        method: "GET",
-        dataType: 'JSON'
-      }).success(function(data) {
-        renderResponse(data, route);
-      });
+      getRouteTasks(route);
     } 
+  });
+}
+
+function getAllTasks(){
+  var route = "All Tasks";
+  $.ajax({
+    url: '/tasks/all',
+    method: "GET",
+    dataType: 'JSON'
+  }).success(function(data) {
+    renderResponse(data, route);
+  });
+}
+
+function getRouteTasks(route){
+  $.ajax({
+    url: '/tasks/all' + '-' + route,
+    method: "GET",
+    dataType: 'JSON'
+  }).success(function(data) {
+    renderResponse(data, route);
   });
 }
 
