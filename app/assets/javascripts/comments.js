@@ -1,3 +1,11 @@
+$(document).ready(function(){
+  compileNewCommentTemplate();
+  compileEditCommentTemplate();
+  newComment();
+  editComment();
+  updateComment();
+});
+
 class Comment {
   constructor(attributes){
     this.id = attributes.id;
@@ -7,12 +15,14 @@ class Comment {
     this.user_id = attributes.user_id;
   } 
 
+  // Display a formatted date
   friendlyDate() {
     var date = new Date(this.created_at);
     var friendlyDate = this.formatDate(date);
     return friendlyDate;
   }
 
+  // Format JS standard date
   formatDate(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -24,29 +34,32 @@ class Comment {
     return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
   }
 
-  renderComment(){
-    return template({content: this.content, id: this.id, createdAt: this.friendlyDate()});
+  // render the handlebars NewComment template
+  renderNewComment(){
+    return newCommentTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
   }
 
+  // render the handlebars EditComment template
   renderEditComment(){
-    return editTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
+    return editCommentTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
   }
-
 }
 
+// Create a new comment and add it to the page
 function newComment() {
   $('#new_comment').submit(function(event) {
     event.preventDefault();
     var values = $(this).serialize();
     $.post('/projects/1/comments',values).success(function(data) {
         var comment = new Comment(data);
-        var commentRender = comment.renderComment()
+        var commentRender = comment.renderNewComment()
         $(".comments").prepend(commentRender);
         $("#comment_content").val("");
       });
   });
 }
 
+// GET Request the edit form for a comment
 function editComment() {
   $('#edit-comment').click(function(event) {
     event.preventDefault();
@@ -57,7 +70,7 @@ function editComment() {
       dataType: 'JSON'
     }).done(function(data) {
       var comment = new Comment(data);
-      var commentRender = comment.renderEditComment()
+      var commentRender = comment.renderEditComment();
       var id = '#' + data.id;
       $(id + ' .comment-content').html(commentRender);
       $(id + ' textarea').val(comment.content);
@@ -65,6 +78,7 @@ function editComment() {
   });
 }
 
+// Update the comment on the page via AJAX post request
 function updateComment() {
   $(document).on("submit", ".save-comment", function(event) {
     event.preventDefault();
@@ -84,25 +98,18 @@ function updateComment() {
   }); 
 }
 
-
+// compile the handlebars NewComment template on load
 function compileNewCommentTemplate(){
-  var source = $("#template").html();
-  if ( source !== undefined ) {
-    template = Handlebars.compile(source); 
+  var newCommentSource = $("#newCommentTemplate").html();
+  if ( newCommentSource !== undefined ) {
+    newCommentTemplate = Handlebars.compile(newCommentSource); 
   }
 }
 
+// compile the handlebars EditComment template on load
 function compileEditCommentTemplate(){
-  var editSource = $("#editCommentTemplate").html();
-  if ( editSource !== undefined ) {
-    editTemplate = Handlebars.compile(editSource); 
+  var editCommentSource = $("#editCommentTemplate").html();
+  if ( editCommentSource !== undefined ) {
+    editCommentTemplate = Handlebars.compile(editCommentSource); 
   }
 }
-
-$(document).ready(function(){
-  compileNewCommentTemplate();
-  compileEditCommentTemplate();
-  newComment();
-  editComment();
-  updateComment();
-});
