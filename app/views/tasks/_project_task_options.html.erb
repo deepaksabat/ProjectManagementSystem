@@ -14,4 +14,12 @@
   <div class="inline-button">
     <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger js-filter", id: "overdue-tasks" %>
   </div>
+
+  <%= form_tag(project_tasks_path(project), method: "get") do %>
+  <%= label_tag(:status, "Filter by:") %>
+  <%= select_tag "status", "<option>Active</option><option>Complete</option>".html_safe %>
+   <%= label_tag(:assigned, "Assigned:") %>
+  <%= select_tag "assigned", "<option>All</option><option>To You</option><option>To Others</option>".html_safe %>
+  <%= submit_tag("Filter") %>
+<% end %>
 </div>
