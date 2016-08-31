@@ -137,7 +137,8 @@ class TasksController < ApplicationController
   def all_task_statuses_count
     @overdue = (current_user.overdue_tasks + current_user.overdue_assigned_tasks).uniq.count
     @active = (current_user.active_tasks + current_user.active_assigned_tasks).uniq.count
-    @complete= (current_user.complete_tasks + current_user.complete_tasks).uniq.count
+    @complete = (current_user.complete_tasks + current_user.complete_assigned_tasks).uniq.count
+    @all = (@overdue + @active + @complete)
   end
 
   def task_params

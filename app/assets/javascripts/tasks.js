@@ -66,13 +66,22 @@ class Task {
 
 // master getTask function, triggered when a filter button is clicked
 function getTasks() {
-  $('.js-filter').on("click", function(e) {
-    var route = $(event.target)[0].id
-    if ( route === "all"){
-      getAllTasks();
-    } else {
-      getRouteTasks(route);
-    } 
+  $('.js-filter').on("click", function(event) {
+    event.preventDefault();
+    var path = $(event.target).attr('href');
+    var title = $(event.target).text();
+    debugger
+    fetchTasks(path, title);
+  });
+}
+
+function fetchTasks(url, title){
+  $.ajax({
+    url: url,
+    method: "GET",
+    dataType: 'JSON'
+  }).success(function(data) {
+    renderResponse(data, title);
   });
 }
 
@@ -89,6 +98,16 @@ function getAllTasks(){
 }
 
 // if the users wants to see a particular group of tasks
+function getRouteTasks(route){
+  $.ajax({
+    url: '/tasks/all' + '-' + route,
+    method: "GET",
+    dataType: 'JSON'
+  }).success(function(data) {
+    renderResponse(data, route);
+  });
+}
+
 function getRouteTasks(route){
   $.ajax({
     url: '/tasks/all' + '-' + route,

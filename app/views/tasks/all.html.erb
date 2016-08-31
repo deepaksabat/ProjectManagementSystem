@@ -1,7 +1,7 @@
-<%= render partial: "all_task_options", locals:{overdue: @overdue, active: @active, complete: @complete} %>
+<%= render partial: "all_task_options", locals:{overdue: @overdue, active: @active, complete: @complete, all: @all} %>
 
 <div class="task-block">
-  <h2>All Tasks</h2>
+  <h2>All Tasks ( <%= @all %> )</h2>
   <div class="line-dark"></div>
   <% if @tasks.empty? %>
     <h4>It looks like you don't have any tasks. Why not create new one?</h4>
@@ -13,8 +13,6 @@
     </div>
   <% end %>
 </div>
-
-
 
 <script id="template" type="text/x-handlebars-template">
   <div class="tasks-template-js col-md-4" id="{{id}}">

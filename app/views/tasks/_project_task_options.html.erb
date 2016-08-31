@@ -6,12 +6,12 @@
     <%= link_to "New Task", new_project_task_path(@project), class: "btn btn-default td-button" %>
   </div>
   <div class="inline-button">
-    <%= link_to "Active tasks ( #{active} )", project_tasks_path(@project), class: "btn btn-warning" %> 
+    <%= link_to "Active Tasks ( #{active} )", project_tasks_path(@project), class: "btn btn-warning", id: "active-tasks"%> 
   </div>
   <div class="inline-button">
-    <%= link_to "Complete tasks ( #{complete} )", complete_project_tasks_path(@project), class: "btn btn-success" %>
+    <%= link_to "Complete Tasks ( #{complete} )", complete_project_tasks_path(@project), class: "btn btn-success", id: "complete-tasks"  %>
   </div>
   <div class="inline-button">
-    <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger" %>
+    <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger", id: "overdue-tasks" %>
   </div>
 </div>
