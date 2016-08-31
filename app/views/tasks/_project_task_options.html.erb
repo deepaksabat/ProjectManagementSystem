@@ -6,12 +6,22 @@
     <%= link_to "New Task", new_project_task_path(@project), class: "btn btn-default td-button" %>
   </div>
   <div class="inline-button">
-    <%= link_to "Active tasks ( #{active} )", project_tasks_path(@project), class: "btn btn-warning" %> 
+    <div class="btn btn-warning">Active - <%= active %> </div>
   </div>
-  <div class="inline-button">
-    <%= link_to "Complete tasks ( #{complete} )", complete_project_tasks_path(@project), class: "btn btn-success" %>
+   <div class="inline-button">
+    <div class="btn btn-success">Complete - <%= complete %> </div>
   </div>
-  <div class="inline-button">
-    <%= link_to "Overdue tasks ( #{overdue} )", overdue_project_tasks_path(@project), class: "btn btn-danger" %>
+   <div class="inline-button">
+    <div class="btn btn-danger">Overdue - <%= overdue %> </div>
   </div>
+
+  <%= form_tag(project_tasks_path(project), method: "get", id: "filter-tasks-js") do %>
+  <%= label_tag(:status, "Filter by:") %>
+    <%= select_tag "status", '<option value="All">All</option><option value="0">Active</option><option value="1">Complete</option>'.html_safe %>
+  <%= label_tag(:assigned, "Assigned:") %>
+    <%= select_tag "assigned", "<option>All</option><option>To You</option><option>To Others</option>".html_safe %>
+  <%= label_tag(:due, "Due:") %>
+    <%= select_tag "due", "<option>All</option><option>Overdue</option>".html_safe %>
+  <%= submit_tag("Filter", class: "btn btn-default td-button") %>
+<% end %>
 </div>

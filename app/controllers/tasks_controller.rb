@@ -10,10 +10,13 @@ class TasksController < ApplicationController
   def index
     @task = Task.new(project_id: @project.id)
     authorize @task
-    @tasks = @project.active_tasks
+    @tasks = @project.tasks
     respond_to do |format|
       format.html {render :index}
-      format.json {render json: @tasks}
+      format.json do
+        @tasks = Task.project_tasks_filter(@user, @project, params)
+        render json: @tasks
+      end
     end
   end
 
@@ -72,36 +75,47 @@ class TasksController < ApplicationController
   # PROJECT TASKS 
   def complete
     @tasks = @project.complete_tasks
+    render json: @tasks
   end
 
   def overdue
     @tasks = @project.overdue_tasks
+    render json: @tasks
   end
 
   # ALL USER RELATED TASKS
   def all_active_tasks
     @tasks = (@user.tasks.active + @user.assigned_tasks.active).uniq
     @tasks.flatten!
-    render json: @tasks
+    respond_to do |format|
+      format.html {redirect_to get_all_tasks_path }
+      format.json {render json: @tasks}
+    end
   end
 
   def all_complete_tasks
     @tasks = (@user.tasks.complete + @user.assigned_tasks.complete).uniq
     @tasks.flatten!
-    render json: @tasks
+    respond_to do |format|
+      format.html {redirect_to get_all_tasks_path }
+      format.json {render json: @tasks}
+    end
   end
 
   def all_overdue_tasks
     @tasks = (@user.tasks.overdue + @user.assigned_tasks.overdue).uniq
     @tasks.flatten!
-    render json: @tasks
+    respond_to do |format|
+      format.html {redirect_to get_all_tasks_path }
+      format.json {render json: @tasks}
+    end
   end
   
   def all
     @tasks = (@user.tasks + @user.assigned_tasks).uniq
     @tasks.flatten!
     respond_to do |format|
-      format.html {render :all }
+      format.html {render :all}
       format.json {render json: @tasks }
     end
   end
@@ -135,7 +149,8 @@ class TasksController < ApplicationController
   def all_task_statuses_count
     @overdue = (current_user.overdue_tasks + current_user.overdue_assigned_tasks).uniq.count
     @active = (current_user.active_tasks + current_user.active_assigned_tasks).uniq.count
-    @complete= (current_user.complete_tasks + current_user.complete_tasks).uniq.count
+    @complete = (current_user.complete_tasks + current_user.complete_assigned_tasks).uniq.count
+    @all = (@overdue + @active + @complete)
   end
 
   def task_params

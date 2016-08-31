@@ -7,12 +7,16 @@
   <div class="inline-button">
     <%= link_to "New Task", new_project_task_path(@project), class: "btn btn-primary" %>
   </div>
+  <div class="inline-button"> 
+    <%= link_to "View Tasks", project_tasks_path(@project), class: "btn btn-default" %>
+  </div>
   <div class="inline-button">
     <%= link_to "View Comments", project_comments_path(@project), class: "btn btn-default" %>
   </div>
   <div class="inline-button">
     <%= link_to "View Notes", project_notes_path(@project), class: "btn btn-default" %>
   </div>
+  
 </div>
 
 <div class="row">
@@ -25,10 +29,10 @@
         <%= link_to "#{@project.tasks.active.count} Open Tasks", project_tasks_path(@project), class: "btn btn-warning" %>
       </div>
       <div class="inline-button"> 
-        <%= link_to "#{@project.tasks.complete.count} Complete Tasks", complete_project_tasks_path(@project), class: "btn btn-success" %>
+        <%= link_to "#{@project.tasks.complete.count} Complete Tasks", project_tasks_path(@project), class: "btn btn-success" %>
       </div>
       <div class="inline-button"> 
-        <%= link_to "#{@project.tasks.overdue.count} Overdue Tasks", overdue_project_tasks_path(@project), class: "btn btn-danger" %>
+        <%= link_to "#{@project.tasks.overdue.count} Overdue Tasks", project_tasks_path(@project), class: "btn btn-danger" %>
       </div>
       <div class="line-light"></div>
     </div>

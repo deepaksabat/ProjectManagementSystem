@@ -3,15 +3,15 @@
     <%= link_to "Add a New Task", quick_new_task_path, class: "btn btn-default td-button" %>
   </div>
   <div class="inline-button">
-    <%= link_to "All Tasks", "#", class: "btn btn-default js-filter", id: "all" %> 
+    <%= link_to "All Tasks ( #{all} )", get_all_tasks_path, class: "btn btn-default js-filter", id: "all" %> 
   </div>
   <div class="inline-button">
-    <%= link_to "Active Tasks ( #{active} )", "#active", class: "btn btn-warning js-filter", id: "active-tasks" %> 
+    <%= link_to "Active Tasks ( #{active} )", all_active_tasks_path, class: "btn btn-warning js-filter", id: "active-tasks" %> 
   </div>
   <div class="inline-button">
-    <%= link_to "Complete Tasks ( #{complete} )", "#complete", class: "btn btn-success js-filter", id: "complete-tasks"  %>
+    <%= link_to "Complete Tasks ( #{complete} )", all_complete_tasks_path, class: "btn btn-success js-filter", id: "complete-tasks"  %>
   </div>
   <div class="inline-button">
-    <%= link_to "Overdue Tasks ( #{overdue} )", "#overdue", class: "btn btn-danger js-filter", id: "overdue-tasks"  %>
+    <%= link_to "Overdue Tasks ( #{overdue} )", all_overdue_tasks_path, class: "btn btn-danger js-filter", id: "overdue-tasks"  %>
   </div>
 </div>

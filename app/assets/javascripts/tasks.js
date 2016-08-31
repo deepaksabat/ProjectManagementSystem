@@ -65,50 +65,65 @@ class Task {
 }
 
 // master getTask function, triggered when a filter button is clicked
+// function getTasks() {
+//   $('.js-filter).on("click", function(event) {
+//     event.preventDefault();
+//     
+//     var path = $(event.target).attr('href');
+//     var title = $(event.target).text();
+//     fetchTasks(path, title);
+//   });
+// }
+
 function getTasks() {
-  $('.js-filter').on("click", function(e) {
-    var route = $(event.target)[0].id
-    if ( route === "all"){
-      getAllTasks();
-    } else {
-      getRouteTasks(route);
-    } 
+  $('#filter-tasks-js').on("submit", function(event) {
+    event.preventDefault();
+    var url = $(event.target).attr('action')
+    var values = $(this).serialize();
+    fetchTasks(url, values);
   });
 }
 
-// if the user wants to see all tasks
-function getAllTasks(){
-  var route = "All Tasks";
+
+// fetch tasks based on path
+// function fetchTasks(url, title){
+//   debugger
+//   $.ajax({
+//     url: url,
+//     method: "GET",
+//     dataType: 'JSON'
+//   }).success(function(data) {
+//     var newTitle = formatTitle(title);
+//     $('h2').html(newTitle);
+//     renderResponse(data);
+//   });
+// }
+
+function fetchTasks(url, values){
   $.ajax({
-    url: '/tasks/all',
+    url: url,
     method: "GET",
+    data: values,
     dataType: 'JSON'
   }).success(function(data) {
-    renderResponse(data, route);
+    console.log(data);
+    $(".row").html("");
+    $('h2').text(data.length + " Tasks");
+    renderResponse(data);
   });
 }
 
-// if the users wants to see a particular group of tasks
-function getRouteTasks(route){
-  $.ajax({
-    url: '/tasks/all' + '-' + route,
-    method: "GET",
-    dataType: 'JSON'
-  }).success(function(data) {
-    renderResponse(data, route);
-  });
+function filterData(data) {
+
 }
 
 // render the AJAX response to the page
-function renderResponse(data, route) {
-  $(".row").html("");
+function renderResponse(data) {
   $.each(data, function(index, task){
     var taskObject = new Task(task);
     taskObject.overdueCheck();
     taskObject.completeCheck();
     taskObject.assignUsers(task.assigned_users);
-    var title = formatTitle(route);
-    $('h2').html( title );
     var taskRender = taskObject.renderTask();
     $(".row").prepend(taskRender);
     if (taskObject.selfAssignCheck(task.assigned_users) === true){

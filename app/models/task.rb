@@ -42,4 +42,27 @@ class Task < ActiveRecord::Base
     self.due_date < Date.today ? true : false
   end
 
+  def self.project_tasks_filter(user, project, params)
+    if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
+      tasks = project.tasks
+      return tasks
+    end
+    if params[:status] == "All"
+      tasks = Task.where(project_id: project.id)
+    else
+      tasks = Task.where(status: params[:status], project_id: project.id)
+    end
+    if params[:assigned] == "To You"
+      tasks = tasks.map {|t| t.assigned_users.include?(user) ? t : nil}.compact
+    elsif params[:assigned] == "To Others"
+      tasks = tasks.map {|t| !t.assigned_users.include?(user) ? t : nil}.compact
+    else
+      tasks.compact
+    end
+    if params[:due] == "Overdue"
+      tasks = tasks.map {|t| t.due_date < Date.today && t.complete? == false ? t : nil}.compact
+    end
+    return tasks
+  end
+
 end 
