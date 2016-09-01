@@ -117,7 +117,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html {render :all}
       format.json do
-        @tasks = Task.tasks_filter(@user, @project, params)
+        @tasks = Task.tasks_filter(@user, params)
         render json: @tasks
       end
     end
@@ -153,7 +153,7 @@ class TasksController < ApplicationController
     @overdue = (current_user.overdue_tasks + current_user.overdue_assigned_tasks).uniq.count
     @active = (current_user.active_tasks + current_user.active_assigned_tasks).uniq.count
     @complete = (current_user.complete_tasks + current_user.complete_assigned_tasks).uniq.count
-    @all = (@overdue + @active + @complete)
+    @all = (@active + @complete)
   end
 
   def task_params

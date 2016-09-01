@@ -65,4 +65,26 @@ class Task < ActiveRecord::Base
     return tasks
   end
 
+  def self.tasks_filter(user, params)
+    if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
+      return user.all_user_tasks
+    end
+    if params[:status] == "All"
+      user.all_user_tasks
+    else
+      tasks = Task.where(status: params[:status])
+    end
+    if params[:assigned] == "To You"
+      tasks = tasks.map {|t| t.assigned_users.include?(user) ? t : nil}.compact
+    elsif params[:assigned] == "To Others"
+      tasks = tasks.map {|t| !t.assigned_users.include?(user) ? t : nil}.compact
+    else
+      tasks.compact
+    end
+    if params[:due] == "Overdue"
+      tasks = tasks.map {|t| t.due_date < Date.today && t.complete? == false ? t : nil}.compact
+    end
+    return tasks
+  end
+
 end 
