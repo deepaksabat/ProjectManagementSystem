@@ -8,6 +8,10 @@ class NotesController < ApplicationController
   def index
     if @project.owner == @user || @user.admin? || @project.collaborators.include?(@user)
       @notes = @project.notes.reverse
+      respond_to do |format|
+        format.html {render :index}
+        format.json {render json: @notes}
+      end
     else
       flash[:alert] = "You are not authorized to perform that action."
       redirect_to root_path
@@ -32,17 +36,19 @@ class NotesController < ApplicationController
   def show
     @project = @note.project
     authorize @note
+    render json: @note
   end
 
   def edit 
     @project = @note.project
     authorize @note
+    render json: @note
   end
 
   def update
     authorize @note
     @note.update(note_params)
-    redirect_to note_path(@note)
+    render json: @note
   end
 
   def destroy
