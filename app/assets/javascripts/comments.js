@@ -56,20 +56,19 @@ function newComment() {
       $(".comments").prepend(commentRender);
       $("#comment_content").val("");
     });
-    debugger
   });
 }
 
 // GET Request the edit form for a comment
 function editComment() {
-  $('.edit-comment').click(function(event) {
+  $(document).on("click", ".edit-comment", function(event){
     event.preventDefault();
     var href = $(this).attr('href');
     $.ajax({
       url: href,
       method: "GET",
       dataType: 'JSON'
-    }).done(function(data) {
+    }).success(function(data) {
       var comment = new Comment(data);
       var commentRender = comment.renderEditComment();
       var id = '#' + data.id;

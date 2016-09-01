@@ -67,12 +67,12 @@
 </script>
 
 <script id="newCommentTemplate" type="text/x-handlebars-template">
-  <div class="comment-template-js" id="{{comment-id}}">
+  <div class="comment-template-js" id="{{id}}">
     <p> Posted: {{createdAt}} by <%= @comment.user.name %></p>
     <p>On <%= link_to @comment.task.name, task_path(@comment.task) %> in <%= link_to @comment.task.project.name, project_path(@comment.task.project) %></p>
-    <p>{{content}}</p>
+    <p class="comment-content">{{content}}</p>
     <div class="inline-button">
-      <a href="/comments/{{id}}/edit" class="btn btn-sm btn-primary edit-comment" id="comment-{{id}}">Edit</a>
+      <a href="/comments/{{id}}/edit" class="btn btn-sm btn-primary edit-comment" id="{{id}}">Edit</a>
     </div>
     <div class="inline-button"> 
       <form class="button_to" method="post" action="/comments/{{id}}">
