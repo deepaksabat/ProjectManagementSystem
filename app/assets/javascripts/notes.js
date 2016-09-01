@@ -39,6 +39,10 @@ class Note {
   renderNote() {
     return noteTemplate({content: this.content, user: this.user, id: this.id, createdAt: this.friendlyDate()});
   }
+
+  renderEditNote(){
+    return editNoteTemplate(this);
+  }
 }
 
 function getNote() {
@@ -49,17 +53,17 @@ function getNote() {
       method: "GET",
       dataType: 'JSON'
     }).success(function(data) {
-      var noteObject = new Note(data);
-      var noteRender = noteObject.renderNote();
+      var note = new Note(data);
+      var noteRender = note.renderNote();
       $(".note-template-js").html("");
-      $(".notes #note-" + noteObject.id).append(noteRender);
+      $(".notes #note-" + note.id).append(noteRender);
     });
   });
 }
 
 // GET Request the edit form for a Note
 function editNote() {
-  $(document).on("click", ".edit-Note", function(event){
+  $(document).on("click", ".edit-note", function(event){
     event.preventDefault();
     var href = $(this).attr('href');
     $.ajax({
@@ -67,11 +71,11 @@ function editNote() {
       method: "GET",
       dataType: 'JSON'
     }).success(function(data) {
-      var Note = new Note(data);
-      var NoteRender = Note.renderEditNote();
+      var note = new Note(data);
+      var noteRender = note.renderEditNote();
       var id = '#' + data.id;
-      $(id + ' .Note-content').html(NoteRender);
-      $(id + ' textarea').val(Note.content);
+      $(".notes #note-" + note.id + ' .note-content').html(noteRender);
+      $(".notes #note-" + note.id + ' textarea').val(note.content);
     });
   });
 }

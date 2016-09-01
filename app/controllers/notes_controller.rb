@@ -42,6 +42,7 @@ class NotesController < ApplicationController
   def edit 
     @project = @note.project
     authorize @note
+    render json: @note
   end
 
   def update
