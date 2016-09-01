@@ -1,6 +1,6 @@
 $(document).ready(function(){
   compileTemplate();
-  getNotes();
+  getNote();
 });
 
 class Note {
@@ -13,32 +13,48 @@ class Note {
     this.project = attributes.project.name;
   }
 
+  // Display a formatted date
+  friendlyDate() {
+    var date = new Date(this.created_at);
+    var friendlyDate = this.formatDate(date);
+    return friendlyDate;
+  }
+
+  // Format JS standard date
+  formatDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
+  }
+
   // Render the handlebars template
   renderNote() {
     return template(this);
   }
 }
 
-function getNotes() {
-  $('#filter-Notes-js').on("submit", function(event) {
+function getNote() {
+  $(document).on("click", '.js-get-note', function(event) {
     event.preventDefault();
-    var url = $(event.target).attr('action')
-    var values = $(this).serialize();
-    fetchNotes(url, values);
+    var url = $(event.target).attr('href');
+    fetchNote(url);
   });
 }
 
-function fetchNotes(url, values){
+function fetchNote(url){
   $.ajax({
     url: url,
     method: "GET",
-    data: values,
     dataType: 'JSON'
   }).success(function(data) {
     console.log(data);
-    $(".row").html("");
-    $('h2').text(data.length + " Notes");
-    renderResponse(data);
+    alert("hello");
+    
   });
 }
 
@@ -67,14 +83,4 @@ function compileTemplate(){
   if ( source !== undefined ) {
     template = Handlebars.compile(source); 
   }
-}
-
-// format the page title after an AJAX request
-function formatTitle(str){
-  var array = str.replace(/[-]/, " ").split(" ");
-  var newArray = [];
-  for (var i = 0; i < array.length; i++) {
-    newArray[i] = array[i].charAt(0).toUpperCase() + array[i].substr(1);
-  }
-  return newArray.join(" ");
 }

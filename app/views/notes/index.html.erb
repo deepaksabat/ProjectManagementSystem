@@ -2,12 +2,14 @@
   <h2>Your Notes</h2>
   <%= link_to "New Note", new_project_note_path, class: "btn btn-primary" %>
   <div class="line-dark"></div>
-  <% if @notes.empty? %>
-     <h4><%= "You don't have any notes yet. Why not start by writing a new one?" %></h4>
-  <% else %>
-    <% @notes.each do |note| %>
-      <h3><%= note.title %> <%= link_to "View", note_path(note), class: "btn btn-primary" %></h3>
-      <div class="line-light"></div>
+  <div class="note-block">
+    <% if @notes.empty? %>
+       <h4><%= "You don't have any notes yet. Why not start by writing a new one?" %></h4>
+    <% else %>
+      <% @notes.each do |note| %>
+        <h3><%= note.title %> <%= link_to "View", note_path(note), class: "btn btn-primary js-get-note" %></h3>
+        <div class="line-light"></div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
