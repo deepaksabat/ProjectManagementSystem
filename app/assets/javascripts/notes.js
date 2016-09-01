@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  compileTemplate();
+  compileNoteTemplate();
   getNote();
 });
 
@@ -15,7 +15,7 @@ class Note {
 
   // Display a formatted date
   friendlyDate() {
-    var date = new Date(this.created_at);
+    var date = new Date(this.createdAt);
     var friendlyDate = this.formatDate(date);
     return friendlyDate;
   }
@@ -34,53 +34,30 @@ class Note {
 
   // Render the handlebars template
   renderNote() {
-    return template(this);
+    return noteTemplate({content: this.content, user: this.user, id: this.id, createdAt: this.friendlyDate()});
   }
 }
 
 function getNote() {
   $(document).on("click", '.js-get-note', function(event) {
     event.preventDefault();
-    var url = $(event.target).attr('href');
-    fetchNote(url);
+    $.ajax({
+      url: $(event.target).attr('href'),
+      method: "GET",
+      dataType: 'JSON'
+    }).success(function(data) {
+      var noteObject = new Note(data);
+      var noteRender = noteObject.renderNote();
+      $(".note-template-js").html("");
+      $(".notes #note-" + noteObject.id).append(noteRender);
+    });
   });
-}
-
-function fetchNote(url){
-  $.ajax({
-    url: url,
-    method: "GET",
-    dataType: 'JSON'
-  }).success(function(data) {
-    console.log(data);
-    alert("hello");
-    
-  });
-}
-
-function filterData(data) {
-
-}
-
-// render the AJAX response to the page
-function renderResponse(data) {
-  $.each(data, function(index, Note){
-    var NoteObject = new Note(Note);
-    NoteObject.overdueCheck();
-    NoteObject.completeCheck();
-    NoteObject.assignUsers(Note.assigned_users);
-    var NoteRender = NoteObject.renderNote();
-    $(".row").prepend(NoteRender);
-    if (NoteObject.selfAssignCheck(Note.assigned_users) === true){
-      $("#self-assign").text("Assigned to you");
-    }
-  })
 }
 
 // compile the handlebars template on document load
-function compileTemplate(){
-  source = $("#template").html();
-  if ( source !== undefined ) {
-    template = Handlebars.compile(source); 
+function compileNoteTemplate(){
+  noteSource = $("#noteTemplate").html();
+  if ( noteSource !== undefined ) {
+    noteTemplate = Handlebars.compile(noteSource); 
   }
 }
