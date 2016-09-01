@@ -27,7 +27,8 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     authorize @note
     if @note.save
-      redirect_to note_path(@note)
+      @project = @note.project
+      redirect_to project_notes_path(@project)
     else
       render :new
     end
@@ -53,6 +54,7 @@ class NotesController < ApplicationController
 
   def destroy
     authorize @note
+    @project = @note.project
     @note.destroy
     redirect_to project_notes_path(@project)
   end
