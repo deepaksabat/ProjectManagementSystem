@@ -48,7 +48,7 @@ class NotesController < ApplicationController
   def update
     authorize @note
     @note.update(note_params)
-    redirect_to note_path(@note)
+    render json: @note
   end
 
   def destroy

@@ -82,20 +82,20 @@ function editNote() {
 
 // Update the Note on the page via AJAX post request
 function updateNote() {
-  $(document).on("submit", ".save-Note", function(event) {
+  $(document).on("submit", ".save-note", function(event) {
     event.preventDefault();
     var values = $(this).serialize();
-    var id = $(event.target)[0].id
-    var url =  "/Notes/" + id.slice(13, id.length);
+    var url = $(event.target).attr('action');
     $.ajax({
       url:  url,
       method: "POST",
       dataType: 'JSON',
       data: values
     }).success(function(data) {
-      var Note = new Note(data);
-      var id = "#" + Note.id;
-      $(id + ' .Note-content').html(Note.content);
+      var note = new Note(data);
+      var noteRender = note.renderNote();
+      $(".note-template-js").html("");
+      $(".notes #note-" + note.id).append(noteRender);
     });
   }); 
 }
