@@ -1,6 +1,9 @@
 $(document).ready(function(){
   compileNoteTemplate();
+  compileEditNoteTemplate();
   getNote();
+  editNote();
+  updateNote();
 });
 
 class Note {
@@ -54,10 +57,57 @@ function getNote() {
   });
 }
 
+// GET Request the edit form for a Note
+function editNote() {
+  $(document).on("click", ".edit-Note", function(event){
+    event.preventDefault();
+    var href = $(this).attr('href');
+    $.ajax({
+      url: href,
+      method: "GET",
+      dataType: 'JSON'
+    }).success(function(data) {
+      var Note = new Note(data);
+      var NoteRender = Note.renderEditNote();
+      var id = '#' + data.id;
+      $(id + ' .Note-content').html(NoteRender);
+      $(id + ' textarea').val(Note.content);
+    });
+  });
+}
+
+// Update the Note on the page via AJAX post request
+function updateNote() {
+  $(document).on("submit", ".save-Note", function(event) {
+    event.preventDefault();
+    var values = $(this).serialize();
+    var id = $(event.target)[0].id
+    var url =  "/Notes/" + id.slice(13, id.length);
+    $.ajax({
+      url:  url,
+      method: "POST",
+      dataType: 'JSON',
+      data: values
+    }).success(function(data) {
+      var Note = new Note(data);
+      var id = "#" + Note.id;
+      $(id + ' .Note-content').html(Note.content);
+    });
+  }); 
+}
+
 // compile the handlebars template on document load
 function compileNoteTemplate(){
   noteSource = $("#noteTemplate").html();
   if ( noteSource !== undefined ) {
     noteTemplate = Handlebars.compile(noteSource); 
+  }
+}
+
+// compile the handlebars EditComment template on load
+function compileEditNoteTemplate(){
+  var editNoteSource = $("#editNoteTemplate").html();
+  if ( editNoteSource !== undefined ) {
+    editNoteTemplate = Handlebars.compile(editNoteSource); 
   }
 }
