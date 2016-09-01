@@ -116,7 +116,10 @@ class TasksController < ApplicationController
     @tasks.flatten!
     respond_to do |format|
       format.html {render :all}
-      format.json {render json: @tasks }
+      format.json do
+        @tasks = Task.tasks_filter(@user, @project, params)
+        render json: @tasks
+      end
     end
   end
 
