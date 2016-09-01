@@ -14,3 +14,22 @@
     <% end %>
   </div>
 </div>
+
+
+<script id="noteTemplate" type="text/x-handlebars-template">
+  <div class="note-template-js" id="{{id}}">
+    <p>Posted on {{friendly_date}} by {{user}}</p>
+    <p class="note-content">{{content}}</p>
+    <div class="inline-button">
+      <a href="/notes/{{id}}/edit" class="btn btn-sm btn-primary edit-note" id="{{id}}">Edit</a>
+    </div>
+    <div class="inline-button"> 
+      <form class="button_to" method="post" action="/notes/{{id}}">
+        <input type="hidden" name="_method" value="delete" />
+        <input class="btn btn-sm btn-danger" type="submit" value="Delete" />
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      </form>   
+    </div>
+    <div class="line-light"></div>
+  </div>
+</script>
