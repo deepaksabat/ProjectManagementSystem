@@ -3,7 +3,7 @@
   <p>On <%= link_to comment.task.name, task_path(comment.task) %> in <%= link_to comment.task.project.name, project_path(comment.task.project) %></p>
   <p class="comment-content"> <%= comment.content %></p>
   <div class="inline-button">
-    <%= link_to "Edit", edit_comment_path(comment), class: "btn btn-sm btn-primary", id: "edit-comment" %> 
+    <%= link_to "Edit", edit_comment_path(comment), class: "btn btn-sm btn-primary edit-comment" %> 
   </div>
   <div class="inline-button">    
     <%= button_to "Delete", comment_path(comment), method: :delete, class: "btn btn-sm btn-danger" %>

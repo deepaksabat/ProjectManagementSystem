@@ -72,7 +72,7 @@
     <p>On <%= link_to @comment.task.name, task_path(@comment.task) %> in <%= link_to @comment.task.project.name, project_path(@comment.task.project) %></p>
     <p>{{content}}</p>
     <div class="inline-button">
-      <a href="/comments/{{id}}/edit" class="btn btn-sm btn-primary">Edit</a>
+      <a href="/comments/{{id}}/edit" class="btn btn-sm btn-primary edit-comment" id="comment-{{id}}">Edit</a>
     </div>
     <div class="inline-button"> 
       <form class="button_to" method="post" action="/comments/{{id}}">

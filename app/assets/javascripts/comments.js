@@ -47,7 +47,7 @@ class Comment {
 
 // Create a new comment and add it to the page
 function newComment() {
-  $('#new_comment').on('submit', function(event) {
+  $('.new_comment').on('submit', function(event) {
     event.preventDefault();
     var values = $(this).serialize();
     $.post('/projects/1/comments',values).success(function(data) {
@@ -62,7 +62,7 @@ function newComment() {
 
 // GET Request the edit form for a comment
 function editComment() {
-  $('#edit-comment').click(function(event) {
+  $('.edit-comment').click(function(event) {
     event.preventDefault();
     var href = $(this).attr('href');
     $.ajax({
