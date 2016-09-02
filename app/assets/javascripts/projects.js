@@ -84,10 +84,13 @@ function fetchProjects(url, values){
     data: values,
     dataType: 'JSON'
   }).success(function(data) {
-    console.log(data);
     $(".row").html("");
-    $('h2').text(data.length + " Projects");
-    renderProjectResponse(data);
+    if (data === null) {
+      $('h2').text("0 Projects");
+    } else{
+      $('h2').text(data.length + " Projects");
+      renderProjectResponse(data);
+    }
   });
 }
 

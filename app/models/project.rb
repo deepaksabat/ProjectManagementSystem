@@ -76,16 +76,16 @@ class Project < ActiveRecord::Base
       projects = Project.where(status: params[:status])
     end
     if params[:assigned] == "Owner"
-      projects.map! {|p| p.owner == user ? p : nil}.compact
+      projects.map! {|p| p.owner == user ? p : nil}.compact!
     elsif params[:assigned] == "Collaborator"
-      projects.map! {|p| p.collaborators.include?(user) ? p : nil}.compact
+      projects.map! {|p| p.collaborators.include?(user) ? p : nil}.compact!
     else
-      projects.compact
+      projects.compact!
     end
     if params[:due] == "Overdue"
-      projects.map! {|p| p.overdue? && p.complete? == false ? p : nil}.compact
+      projects.map! {|p| p.overdue? && p.complete? == false ? p : nil}.compact!
     end
-    return projects.compact
+    return projects.compact!
   end
 
 end
