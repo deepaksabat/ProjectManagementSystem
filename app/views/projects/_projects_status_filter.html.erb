@@ -12,7 +12,7 @@
     <div class="btn btn-danger">Overdue - <%= overdue %> </div>
   </div>
 
-  <%= form_tag(projects_path, method: "get", id: "filter-tasks-js") do %>
+  <%= form_tag(projects_path, method: "get", id: "filter-projects-js") do %>
   <%= label_tag(:status, "Filter by:") %>
     <%= select_tag "status", '<option value="All">All</option><option value="0">Active</option><option value="1">Complete</option>'.html_safe %>
   <%= label_tag(:assigned, "Ownership:") %>

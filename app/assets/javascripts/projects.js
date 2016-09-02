@@ -64,11 +64,12 @@ class Project {
 }
 
 function getProjects() {
-  $('#filter-Projects-js').on("submit", function(event) {
+  $('#filter-projects-js').on("submit", function(event) {
     event.preventDefault();
-    var url = $(event.target).attr('action')
+    var url = $(event.target).attr('action');
     var values = $(this).serialize();
     fetchProjects(url, values);
+
   });
 }
 
@@ -79,6 +80,7 @@ function fetchProjects(url, values){
     data: values,
     dataType: 'JSON'
   }).success(function(data) {
+    debugger
     console.log(data);
     $(".row").html("");
     $('h2').text(data.length + " projects");
@@ -103,7 +105,7 @@ function renderResponse(data) {
 
 // compile the handlebars template on document load
 function compileTemplate(){
-  source = $("#template").html();
+  source = $("#projectTemplate").html();
   if ( source !== undefined ) {
     template = Handlebars.compile(source); 
   }

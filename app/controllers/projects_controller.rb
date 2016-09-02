@@ -10,9 +10,9 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html {render :index}
       format.json do
-        if params[:status]
-          @projects = Project.projects_filter(@user, params)
-        end
+        # if params[:status]
+        #   @projects = Project.projects_filter(@user, params)
+        # end
         render json: @projects
       end
     end
