@@ -70,7 +70,7 @@ class Task < ActiveRecord::Base
       return user.all_user_tasks
     end
     if params[:status] == "All"
-      user.all_user_tasks
+      tasks = user.all_user_tasks
     else
       tasks = Task.where(status: params[:status])
     end
