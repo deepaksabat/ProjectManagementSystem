@@ -46,7 +46,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-
   def active_tasks
     self.tasks.active 
   end
@@ -84,7 +83,7 @@ class Project < ActiveRecord::Base
       projects.compact
     end
     if params[:due] == "Overdue"
-      projects.map {|p| p.due_date < Date.today && p.complete? == false ? p : nil}.compact
+      projects.map {|p| p.overdue? && p.complete? == false ? p : nil}.compact
     end
     return projects
   end
