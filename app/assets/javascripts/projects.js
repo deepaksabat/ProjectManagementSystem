@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  compileTemplate();
+  compileProjectTemplate();
   getProjects();
 });
 
@@ -12,15 +12,33 @@ class Project {
     this.status = attributes.status;
     this.createdAt = attributes.created_at;
     this.ownerName = attributes.owner.name;
-    this.taskCount = attributes.tasks.length;
-    this.commentCount = attributes.comments.length;
     this.overdue = "";
     this.complete = "";
-    this.collaborators = "";
+    this.collaborators = attributes.collaborators;
   }
 
+  // Display a formatted date
+  friendlyDate() {
+    var date = new Date(this.createdAt);
+    var friendlyDate = this.formatDate(date);
+    this.createdAt = friendlyDate;
+  }
+
+  // Format JS standard date
+  formatDate(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
+  }
+
+
   // Check if the Project is overdue
-  overdueCheck() {
+  overdueProjectCheck() {
     var createdDate = new Date(this.createdAt);
     var currentDate = new Date();
     if (createdDate < currentDate && this.status !== "complete") {
@@ -29,7 +47,7 @@ class Project {
   }
 
   // Check if the Project is complete
-  completeCheck() {
+  completeProjectCheck() {
     if (this.status === "complete") {
       this.complete = "Complete";
     }
@@ -37,29 +55,16 @@ class Project {
 
   // Render the handlebars template
   renderProject() {
-    return template(this);
+    return projectTemplate(this);
   }
 
   // Iterate over the assigned users array and create a string of users
-  assignUsers(userArray) {
+  assignCollaborators(userArray) {
     var names = "";
     $.each(userArray, function(index, user){
       names = names + user.name + ", ";
     });
-    this.assignedUsers = names;
-    return this.assignedUsers;
-  }
-
-  // Check if the current user is assigned to the Project
-  selfAssignCheck(userArray){
-    var email = $("#email").text().slice(0, this.length);
-    var assignment 
-    $.each(userArray, function(index, user){
-      if (user.email === email){
-        assignment = true;
-      }
-    });
-    return assignment;
+    this.collaborators = names;
   }
 }
 
@@ -80,34 +85,31 @@ function fetchProjects(url, values){
     data: values,
     dataType: 'JSON'
   }).success(function(data) {
-    debugger
     console.log(data);
     $(".row").html("");
     $('h2').text(data.length + " projects");
-    renderResponse(data);
+    renderProjectResponse(data);
   });
 }
 
 // render the AJAX response to the page
-function renderResponse(data) {
+function renderProjectResponse(data) {
   $.each(data, function(index, project){
     var projectObject = new Project(project);
-    projectObject.overdueCheck();
-    projectObject.completeCheck();
-    projectObject.assignUsers(project.assigned_users);
+    projectObject.overdueProjectCheck();
+    projectObject.completeProjectCheck();
+    projectObject.friendlyDate();
+    projectObject.assignCollaborators(projectObject.collaborators);
     var projectRender = projectObject.renderProject();
     $(".row").prepend(projectRender);
-    if (projectObject.selfAssignCheck(project.assigned_users) === true){
-      $("#self-assign").text("Assigned to you");
-    }
   })
 }
 
 // compile the handlebars template on document load
-function compileTemplate(){
-  source = $("#projectTemplate").html();
-  if ( source !== undefined ) {
-    template = Handlebars.compile(source); 
+function compileProjectTemplate(){
+  projectSource = $("#projectTemplate").html();
+  if ( projectSource !== undefined ) {
+    projectTemplate = Handlebars.compile(projectSource); 
   }
 }
 
