@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     end    
   end
 
+  def all_user_tasks
+    (self.tasks + self.assigned_tasks).uniq
+  end
+
   def all_active_projects
     self.projects.active + self.collaboration_projects
   end

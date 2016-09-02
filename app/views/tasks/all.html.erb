@@ -1,7 +1,7 @@
 <%= render partial: "all_task_options", locals:{overdue: @overdue, active: @active, complete: @complete, all: @all} %>
 
 <div class="task-block">
-  <h2>All Tasks ( <%= @all %> )</h2>
+  <h2><%= @all %> Tasks</h2>
   <div class="line-dark"></div>
   <% if @tasks.empty? %>
     <h4>It looks like you don't have any tasks. Why not create new one?</h4>
@@ -17,15 +17,10 @@
 <script id="template" type="text/x-handlebars-template">
   <div class="tasks-template-js col-md-4" id="{{id}}">
     <h3> <a href="/tasks/{{id}}">{{name}} </a> </h3>
-    <p> <span class="overdue"> {{overdue}} </span> </p>
-    <p> <span class="complete"> {{complete}} </span>  </p>
-    <p class="collaborator-text" id="self-assign"></p>
-    <p> {{description}} </p>
-    <p> Created: {{createdAt}} </p>
     <p> Owner: {{ownerName}} </p>
-    <p> Due: {{dueDate}} </p>
-    <p> Assigned to: {{assignedUsers}} </p>
-    <p> Status: {{status}} </p>
+    <p> Due: {{dueDate}} <span class="overdue"> {{overdue}} </span> </p> 
+    <p> Assigned to: {{assignedUsers}} <span class="collaborator-text" id="self-assign"></span> </p>
+    <p> <span class="complete"> {{complete}} </span>  </p>
     <p> <a href="/tasks/{{id}}">{{commentCount}} Comments </a> </p>
     <p> Belongs to: <a href="/projects/{{projectId}}">{{projectName}} </p>
     <div class="inline-button">

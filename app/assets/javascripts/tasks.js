@@ -64,17 +64,6 @@ class Task {
   }
 }
 
-// master getTask function, triggered when a filter button is clicked
-// function getTasks() {
-//   $('.js-filter).on("click", function(event) {
-//     event.preventDefault();
-//     
-//     var path = $(event.target).attr('href');
-//     var title = $(event.target).text();
-//     fetchTasks(path, title);
-//   });
-// }
-
 function getTasks() {
   $('#filter-tasks-js').on("submit", function(event) {
     event.preventDefault();
@@ -83,21 +72,6 @@ function getTasks() {
     fetchTasks(url, values);
   });
 }
-
-
-// fetch tasks based on path
-// function fetchTasks(url, title){
-//   debugger
-//   $.ajax({
-//     url: url,
-//     method: "GET",
-//     dataType: 'JSON'
-//   }).success(function(data) {
-//     var newTitle = formatTitle(title);
-//     $('h2').html(newTitle);
-//     renderResponse(data);
-//   });
-// }
 
 function fetchTasks(url, values){
   $.ajax({
