@@ -87,7 +87,7 @@ function fetchProjects(url, values){
   }).success(function(data) {
     console.log(data);
     $(".row").html("");
-    $('h2').text(data.length + " projects");
+    $('h2').text(data.length + " Projects");
     renderProjectResponse(data);
   });
 }
@@ -111,14 +111,4 @@ function compileProjectTemplate(){
   if ( projectSource !== undefined ) {
     projectTemplate = Handlebars.compile(projectSource); 
   }
-}
-
-// format the page title after an AJAX request
-function formatTitle(str){
-  var array = str.replace(/[-]/, " ").split(" ");
-  var newArray = [];
-  for (var i = 0; i < array.length; i++) {
-    newArray[i] = array[i].charAt(0).toUpperCase() + array[i].substr(1);
-  }
-  return newArray.join(" ");
 }

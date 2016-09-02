@@ -72,14 +72,14 @@ class Project < ActiveRecord::Base
       return user.all_projects
     end
     if params[:status] == "All"
-      tasks = user.all_projects
+      projects = user.all_projects
     else
-      tasks = Task.where(status: params[:status])
+      projects = Project.where(status: params[:status])
     end
     if params[:assigned] == "Owner"
       projects = projects.map {|p| p.owner == user ? p : nil}.compact
     elsif params[:assigned] == "Collaborator"
-      projects = projects.map {|p| !p.collaborators.include?(user) ? p : nil}.compact
+      projects = projects.map {|p| p.collaborators.include?(user) ? p : nil}.compact
     else
       projects.compact
     end

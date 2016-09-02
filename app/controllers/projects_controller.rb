@@ -10,9 +10,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html {render :index}
       format.json do
-        # if params[:status]
-        #   @projects = Project.projects_filter(@user, params)
-        # end
+        @projects = Project.projects_filter(@user, params)
         render json: @projects
       end
     end
@@ -98,6 +96,7 @@ class ProjectsController < ApplicationController
     @overdue = (current_user.overdue_projects + current_user.collaboration_projects.overdue).uniq.count
     @active = (current_user.active_projects + current_user.collaboration_projects.active).uniq.count
     @complete = (current_user.complete_projects + current_user.collaboration_projects.complete).uniq.count
+    @all = (@active + @complete)
   end
 
   def project_params
