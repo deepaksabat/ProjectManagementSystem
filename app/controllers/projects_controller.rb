@@ -32,9 +32,13 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    authorize @project
-    @project = Project.find_by(id: params[:id])
-    @user_projects = UserProject.projects(@project.id)
+    if @project == nil
+      redirect_to projects_path
+    else
+      authorize @project
+      @project = Project.find_by(id: params[:id])
+      @user_projects = UserProject.projects(@project.id)
+    end
   end
 
   def edit 
@@ -67,18 +71,6 @@ class ProjectsController < ApplicationController
     @project.collaborators.delete(user)
     @project.save
     redirect_to project_path(@project)
-  end
-
-  def complete_tasks
-    @tasks = @project.tasks.complete
-  end
-
-  def complete
-    @projects = (@user.complete_projects + @user.collaboration_projects.complete).reverse
-  end
-
-  def overdue
-    @projects = (@user.projects.overdue + @user.collaboration_projects.overdue).reverse
   end
 
   ## PRIVATE METHODS
