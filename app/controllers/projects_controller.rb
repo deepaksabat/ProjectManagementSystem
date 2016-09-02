@@ -7,6 +7,12 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = (@user.active_projects + @user.collaboration_projects.active).reverse
+    respond_to do |format|
+      format.html {render :index}
+      format.json do
+        render json: @projects
+      end
+    end
   end
 
   def new
