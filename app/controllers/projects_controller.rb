@@ -9,7 +9,12 @@ class ProjectsController < ApplicationController
     @projects = (@user.active_projects + @user.collaboration_projects.active).reverse
     respond_to do |format|
       format.html {render :index}
-      format.json {render json: @projects}
+      format.json do
+        if params[:status]
+          @projects = Project.projects_filter(@user, params)
+        end
+        render json: @projects
+      end
     end
   end
 
