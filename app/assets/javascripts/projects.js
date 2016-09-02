@@ -12,12 +12,11 @@ class Project {
     this.status = attributes.status;
     this.createdAt = attributes.created_at;
     this.ownerName = attributes.owner.name;
-    this.projectName = attributes.project.name;
+    this.taskCount = attributes.tasks.length;
     this.commentCount = attributes.comments.length;
-    this.projectID = attributes.project.id;
     this.overdue = "";
     this.complete = "";
-    this.assignedUsers = "";
+    this.collaborators = "";
   }
 
   // Check if the Project is overdue
@@ -64,7 +63,7 @@ class Project {
   }
 }
 
-function getProjects() {
+function getprojects() {
   $('#filter-Projects-js').on("submit", function(event) {
     event.preventDefault();
     var url = $(event.target).attr('action')
@@ -82,25 +81,21 @@ function fetchProjects(url, values){
   }).success(function(data) {
     console.log(data);
     $(".row").html("");
-    $('h2').text(data.length + " Projects");
+    $('h2').text(data.length + " projects");
     renderResponse(data);
   });
 }
 
-function filterData(data) {
-
-}
-
 // render the AJAX response to the page
 function renderResponse(data) {
-  $.each(data, function(index, Project){
-    var ProjectObject = new Project(Project);
-    ProjectObject.overdueCheck();
-    ProjectObject.completeCheck();
-    ProjectObject.assignUsers(Project.assigned_users);
-    var ProjectRender = ProjectObject.renderProject();
-    $(".row").prepend(ProjectRender);
-    if (ProjectObject.selfAssignCheck(Project.assigned_users) === true){
+  $.each(data, function(index, project){
+    var projectObject = new Project(project);
+    projectObject.overdueCheck();
+    projectObject.completeCheck();
+    projectObject.assignUsers(project.assigned_users);
+    var projectRender = projectObject.renderProject();
+    $(".row").prepend(projectRender);
+    if (projectObject.selfAssignCheck(project.assigned_users) === true){
       $("#self-assign").text("Assigned to you");
     }
   })
