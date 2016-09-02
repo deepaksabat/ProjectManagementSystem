@@ -74,7 +74,6 @@ function getProjects() {
     var url = $(event.target).attr('action');
     var values = $(this).serialize();
     fetchProjects(url, values);
-
   });
 }
 
