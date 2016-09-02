@@ -63,7 +63,7 @@ class Project {
   }
 }
 
-function getprojects() {
+function getProjects() {
   $('#filter-Projects-js').on("submit", function(event) {
     event.preventDefault();
     var url = $(event.target).attr('action')
