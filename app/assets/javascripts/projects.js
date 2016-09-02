@@ -93,15 +93,17 @@ function fetchProjects(url, values){
 
 // render the AJAX response to the page
 function renderProjectResponse(data) {
-  $.each(data, function(index, project){
-    var projectObject = new Project(project);
-    projectObject.overdueProjectCheck();
-    projectObject.completeProjectCheck();
-    projectObject.friendlyDate();
-    projectObject.assignCollaborators(projectObject.collaborators);
-    var projectRender = projectObject.renderProject();
-    $(".row").prepend(projectRender);
-  })
+  if (data.length !== 0) {
+    $.each(data, function(index, project){
+      var projectObject = new Project(project);
+      projectObject.overdueProjectCheck();
+      projectObject.completeProjectCheck();
+      projectObject.friendlyDate();
+      projectObject.assignCollaborators(projectObject.collaborators);
+      var projectRender = projectObject.renderProject();
+      $(".row").prepend(projectRender);
+    })
+  }
 }
 
 // compile the handlebars template on document load
