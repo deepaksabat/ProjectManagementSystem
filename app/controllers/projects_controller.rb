@@ -43,15 +43,14 @@ class ProjectsController < ApplicationController
 
   def edit 
 
-    # authorize @project
+    authorize @project
     @project = Project.find_by(id: params[:id])
     @collaborators = @project.collaborators
     @user_projects = UserProject.projects(@project.id)
   end
 
   def update
-    binding.pry
-    # authorize @project
+    authorize @project
     if @project.update(project_params)
       redirect_to project_path(@project)
     else
