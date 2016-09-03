@@ -41,8 +41,8 @@
 
           
           <div class="form-group">
-            <%= f.label :role, class: "label-block" %>
-            <%= f.select :role, User.roles.collect {|k,v| [k.capitalize, k]}, selected: resource.role %>
+            <% f.label :role, class: "label-block" %>
+            <% f.select :role, User.roles.collect {|k,v| [k.capitalize, k]}, selected: resource.role %>
           </div>
         </div>
 
