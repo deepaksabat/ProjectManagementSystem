@@ -37,7 +37,7 @@ class Note {
 
   // Render the handlebars template
   renderNote() {
-    return noteTemplate({content: this.content, user: this.user, id: this.id, createdAt: this.friendlyDate()});
+    return noteTemplate({title: this.title, content: this.content, user: this.user, id: this.id, createdAt: this.friendlyDate()});
   }
 
   renderEditNote(){
@@ -55,7 +55,7 @@ function getNote() {
     }).success(function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
-      $(".note-template-js").html("");
+      $(".notes #note-" + note.id).html("");
       $(".notes #note-" + note.id).append(noteRender);
     });
   });
@@ -74,7 +74,8 @@ function editNote() {
       var note = new Note(data);
       var noteRender = note.renderEditNote();
       var id = '#' + data.id;
-      $(".notes #note-" + note.id + ' .note-content').html(noteRender);
+      $(".notes #note-" + note.id).html(noteRender);
+      $(".notes #note-" + note.id + ' #note_title').val(note.title);
       $(".notes #note-" + note.id + ' textarea').val(note.content);
     });
   });
@@ -94,7 +95,7 @@ function updateNote() {
     }).success(function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
-      $(".note-template-js").html("");
+      $(".notes #note-" + note.id).html("");
       $(".notes #note-" + note.id).append(noteRender);
     });
   }); 
