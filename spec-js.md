@@ -2,8 +2,7 @@
 
 Specs:
 - [X] Use jQuery for implementing new requirements
-- [X] Include a show p
-age rendered using jQuery and an Active Model Serialization JSON backend.
+- [X] Include a show page rendered using jQuery and an Active Model Serialization JSON backend.
 - [X] Include an index page rendered using jQuery and an Active Model Serialization JSON backend.
 - [X] Include at least one has_many relationship in information rendered via JSON
 - [X] Include at least one link that loads or updates a resource without reloading the page
