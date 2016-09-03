@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
   has_many :assigned_tasks, through: :user_tasks
   has_many :user_tasks, foreign_key: "assigned_user_id"
   has_many :tasks, foreign_key: "owner_id"
-  
-  enum role: [:user, :admin]
 
   has_attached_file :avatar, default_url: ':style/default.png', styles: { thumb: "100x100>", icon: "30X30>" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
