@@ -72,17 +72,6 @@ class TasksController < ApplicationController
 
   ## ADDITIONAL ACTIONS
 
-  # PROJECT TASKS 
-  def complete
-    @tasks = @project.complete_tasks
-    render json: @tasks
-  end
-
-  def overdue
-    @tasks = @project.overdue_tasks
-    render json: @tasks
-  end
-
   # ALL USER RELATED TASKS
   def all_active_tasks
     @tasks = (@user.tasks.active + @user.assigned_tasks.active).uniq

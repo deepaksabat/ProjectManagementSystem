@@ -85,7 +85,7 @@ class Project < ActiveRecord::Base
     if params[:due] == "Overdue"
       projects.map! {|p| p.overdue? && p.complete? == false ? p : nil}.compact!
     end
-    return projects.compact!
+    return projects.compact
   end
 
 end
