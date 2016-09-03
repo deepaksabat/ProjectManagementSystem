@@ -7,6 +7,13 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = (@user.active_projects + @user.collaboration_projects.active).reverse
+    respond_to do |format|
+      format.html {render :index}
+      format.json do
+        @projects = Project.projects_filter(@user, params)
+        render json: @projects
+      end
+    end
   end
 
   def new
@@ -25,9 +32,13 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    authorize @project
-    @project = Project.find_by(id: params[:id])
-    @user_projects = UserProject.projects(@project.id)
+    if @project == nil
+      redirect_to projects_path
+    else
+      authorize @project
+      @project = Project.find_by(id: params[:id])
+      @user_projects = UserProject.projects(@project.id)
+    end
   end
 
   def edit 
@@ -62,18 +73,6 @@ class ProjectsController < ApplicationController
     redirect_to project_path(@project)
   end
 
-  def complete_tasks
-    @tasks = @project.tasks.complete
-  end
-
-  def complete
-    @projects = (@user.complete_projects + @user.collaboration_projects.complete).reverse
-  end
-
-  def overdue
-    @projects = (@user.projects.overdue + @user.collaboration_projects.overdue).reverse
-  end
-
   ## PRIVATE METHODS
 
   private
@@ -89,6 +88,7 @@ class ProjectsController < ApplicationController
     @overdue = (current_user.overdue_projects + current_user.collaboration_projects.overdue).uniq.count
     @active = (current_user.active_projects + current_user.collaboration_projects.active).uniq.count
     @complete = (current_user.complete_projects + current_user.collaboration_projects.complete).uniq.count
+    @all = (@active + @complete)
   end
 
   def project_params

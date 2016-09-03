@@ -46,7 +46,6 @@ class Project < ActiveRecord::Base
     end
   end
 
-
   def active_tasks
     self.tasks.active 
   end
@@ -65,6 +64,28 @@ class Project < ActiveRecord::Base
 
   def overdue?
     self.due_date < Date.today ? true : false
+  end
+
+  def self.projects_filter(user, params)
+    if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
+      return user.all_projects
+    end
+    if params[:status] == "All"
+      projects = user.all_projects
+    else
+      projects = Project.where(status: params[:status])
+    end
+    if params[:assigned] == "Owner"
+      projects.map! {|p| p.owner == user ? p : nil}.compact!
+    elsif params[:assigned] == "Collaborator"
+      projects.map! {|p| p.collaborators.include?(user) ? p : nil}.compact!
+    else
+      projects.compact!
+    end
+    if params[:due] == "Overdue"
+      projects.map! {|p| p.overdue? && p.complete? == false ? p : nil}.compact!
+    end
+    return projects.compact!
   end
 
 end

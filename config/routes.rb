@@ -26,8 +26,8 @@ Rails.application.routes.draw do
   end
 
   resources :projects do
-    get :overdue, on: :collection
-    get :complete, on: :collection
+    # get :overdue, on: :collection
+    # get :complete, on: :collection
 
     post '/delete_collaborator', to: 'projects#delete_collaborator'
 

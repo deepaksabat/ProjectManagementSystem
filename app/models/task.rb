@@ -67,10 +67,10 @@ class Task < ActiveRecord::Base
 
   def self.tasks_filter(user, params)
     if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
-      return user.all_user_tasks
+      return user.all_tasks
     end
     if params[:status] == "All"
-      tasks = user.all_user_tasks
+      tasks = user.all_tasks
     else
       tasks = Task.where(status: params[:status])
     end
