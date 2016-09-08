@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   ## STANDARD RESTFUL ACTIONS
 
   def index
-    @projects = (@user.active_projects + @user.collaboration_projects.active).reverse
+    @projects = (@user.projects + @user.collaboration_projects).reverse
     respond_to do |format|
       format.html {render :index}
       format.json do

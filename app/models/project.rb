@@ -74,7 +74,7 @@ class Project < ActiveRecord::Base
     if params[:status] == "All"
       projects
     else
-      projects.collect! {|p| p.status.to_i == params[:status].to_i ? p : nil}.compact!
+      projects.collect! {|p| p[:status]== params[:status].to_i ? p : nil}.compact!
     end
     if params[:assigned] == "Owner"
       projects.collect! {|p| p.owner == user ? p : nil}.compact!

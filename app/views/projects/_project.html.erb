@@ -1,6 +1,6 @@
 <div class="col-md-4">
-  <h3> <%= link_to project.name, project_path(project) %> </h3>
-  <span class="overdue"> <%= "Overdue" if project.overdue? && !project.complete?%></span>
+  <h3> <%= link_to project.name, project_path(project) %></h3>
+  <p><span class="complete"> <%= "Complete" if project.complete? %> </span></p>
   <% if project.owner == current_user %>
     <p class="owner-text"> You're an owner </p>
   <% else %>
@@ -8,8 +8,8 @@
   <% end %>
   <p> <%= project.description %> </p>
   <p> Created: <%= project.friendly_created_at %> </p>
-  <p> Due: <%= project.due_date %> </p>
-  <p> Status: <%= project.status.capitalize %> </p>
+  <p> Due: <%= project.due_date %> <span class="overdue"> <%= "Overdue" if project.overdue? && !project.complete?%></span> </p> 
+  <p> Status: <%= project.status.capitalize %></p>
   <p> Collaborators: <% project.collaborators.each do |person| %> <%= person.name %> <%end%> </p>
   <p> <%= link_to "#{project.comments.count} Comments", project_comments_path(project)%> </p>
   <div class="inline-button">

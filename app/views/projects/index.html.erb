@@ -17,13 +17,12 @@
 <script id="projectTemplate" type="text/x-handlebars-template">
   <div class="projects-template-js col-md-4" id="{{id}}">
     <h3> <a href="/projects/{{id}}">{{name}} </a> </h3>
-    <p> <span class="overdue"> {{overdue}} </span> </p>
-    <p> <span class="complete"> {{complete}} </span>  </p>
+    <p><span class="complete">{{complete}}</span></p>
     <p class="collaborator-text" id="self-assign"></p>
     <p> {{description}} </p>
     <p> Created: {{createdAt}} </p>
     <p> Owner: {{ownerName}} </p>
-    <p> Due: {{dueDate}} </p>
+    <p> Due: {{dueDate}} <span class="overdue"> {{overdue}} </span></p>
     <p> Collaborators: {{collaborators}} </p>
     <p> <a href="/projects/{{id}}/comments">{{commentCount}} Comments </a> </p>
     <div class="inline-button">

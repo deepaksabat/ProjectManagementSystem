@@ -16,6 +16,19 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.overdue {
+  text-transform: uppercase;
+  color: red;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.complete {
+  text-transform: uppercase;
+  color: green;
+  font-weight: 900;
+  font-size: 16px;
+}
 
 *{
   margin: 0px;
