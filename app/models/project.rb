@@ -67,23 +67,24 @@ class Project < ActiveRecord::Base
   end
 
   def self.projects_filter(user, params)
+    projects = user.all_projects
     if params[:due] == "All" && params[:status] == "All" && params[:assigned] == "All"
-      return user.all_projects
+      return projects
     end
     if params[:status] == "All"
-      projects = user.all_projects
+      projects
     else
-      projects = Project.where(status: params[:status])
+      projects.collect! {|p| p.status.to_i == params[:status].to_i ? p : nil}.compact!
     end
     if params[:assigned] == "Owner"
-      projects.map! {|p| p.owner == user ? p : nil}.compact!
+      projects.collect! {|p| p.owner == user ? p : nil}.compact!
     elsif params[:assigned] == "Collaborator"
-      projects.map! {|p| p.collaborators.include?(user) ? p : nil}.compact!
+      projects.collect! {|p| p.collaborators.include?(user) ? p : nil}.compact!
     else
-      projects.compact!
+      projects
     end
     if params[:due] == "Overdue"
-      projects.map! {|p| p.overdue? && p.complete? == false ? p : nil}.compact!
+      projects.collect! {|p| p.overdue? && p.complete? == false ? p : nil}.compact!
     end
     return projects.compact
   end
