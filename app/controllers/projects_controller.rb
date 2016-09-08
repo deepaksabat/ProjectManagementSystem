@@ -42,6 +42,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit 
+
     authorize @project
     @project = Project.find_by(id: params[:id])
     @collaborators = @project.collaborators

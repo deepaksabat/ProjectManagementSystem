@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-
+  
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root to: 'home#index'
 
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: 'users/registrations' }, skip: [:sessions] 
@@ -26,8 +28,6 @@ Rails.application.routes.draw do
   end
 
   resources :projects do
-    # get :overdue, on: :collection
-    # get :complete, on: :collection
 
     post '/delete_collaborator', to: 'projects#delete_collaborator'
 
@@ -40,12 +40,4 @@ Rails.application.routes.draw do
   end
 
   patch '/edit_user_project_permission', to: 'user_projects#edit_user_project_permission'
-
-  namespace :admin do 
-    get 'dashboard' => 'dashboard#index', :as => :dashboard
-    get 'tags' => 'dashboard#tags', :as => :tags
-    get 'users' => 'dashboard#users', :as => :users
-    get 'users/:id' => 'dashboard#user_edit', :as => :user_edit
-  end
-
 end
