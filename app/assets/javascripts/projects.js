@@ -78,12 +78,7 @@ function getProjects() {
 }
 
 function fetchProjects(url, values){
-  $.ajax({
-    url: url,
-    method: "GET",
-    data: values,
-    dataType: 'JSON'
-  }).success(function(data) {
+  $.get(url, values, function(data) {
     $(".row").html("");
     if (data === null) {
       $('h2').text("0 Projects");
@@ -91,7 +86,7 @@ function fetchProjects(url, values){
       $('h2').text(data.length + " Projects");
       renderProjectResponse(data);
     }
-  });
+  }, "json");
 }
 
 // render the AJAX response to the page
