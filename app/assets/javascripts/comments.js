@@ -63,18 +63,14 @@ function newComment() {
 function editComment() {
   $(document).on("click", ".edit-comment", function(event){
     event.preventDefault();
-    var href = $(this).attr('href');
-    $.ajax({
-      url: href,
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
+    var url = $(this).attr('href');
+    $.get(url, function(data) {
       var comment = new Comment(data);
       var commentRender = comment.renderEditComment();
       var id = '#' + data.id;
       $(id + ' .comment-content').html(commentRender);
       $(id + ' textarea').val(comment.content);
-    });
+    }, "json");
   });
 }
 
