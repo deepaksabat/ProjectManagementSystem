@@ -74,21 +74,11 @@ function getTasks() {
 }
 
 function fetchTasks(url, values){
-  $.ajax({
-    url: url,
-    method: "GET",
-    data: values,
-    dataType: 'JSON'
-  }).success(function(data) {
-    console.log(data);
+  $.get(url, values, function(data) {
     $(".row").html("");
     $('h2').text(data.length + " Tasks");
     renderResponse(data);
-  });
-}
-
-function filterData(data) {
-
+  }, "json");
 }
 
 // render the AJAX response to the page
