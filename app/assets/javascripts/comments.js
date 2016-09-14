@@ -50,12 +50,13 @@ function newComment() {
   $('.new_comment').on('submit', function(event) {
     event.preventDefault();
     var values = $(this).serialize();
-    $.post('/projects/1/comments',values).success(function(data) {
+    var url = $(this).attr('action');
+    $.post(url, values, function(data) {
       var comment = new Comment(data);
       var commentRender = comment.renderNewComment()
       $(".comments").prepend(commentRender);
       $("#comment_content").val("");
-    });
+    }, "json");
   });
 }
 
