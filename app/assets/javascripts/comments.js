@@ -53,7 +53,7 @@ function newComment() {
     var url = $(this).attr('action');
     $.post(url, values, function(data) {
       var comment = new Comment(data);
-      var commentRender = comment.renderNewComment()
+      var commentRender = comment.renderNewComment();
       $(".comments").prepend(commentRender);
       $("#comment_content").val("");
     }, "json");
@@ -80,18 +80,12 @@ function updateComment() {
   $(document).on("submit", ".save-comment", function(event) {
     event.preventDefault();
     var values = $(this).serialize();
-    var id = $(event.target)[0].id
-    var url =  "/comments/" + id.slice(13, id.length);
-    $.ajax({
-      url:  url,
-      method: "POST",
-      dataType: 'JSON',
-      data: values
-    }).success(function(data) {
+    var url =  $(this).attr('action');
+    $.post(url, values, function(data) {
       var comment = new Comment(data);
       var id = "#" + comment.id;
       $(id + ' .comment-content').html(comment.content);
-    });
+    }, "json");
   }); 
 }
 
