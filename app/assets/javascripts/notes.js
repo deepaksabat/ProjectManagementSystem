@@ -54,7 +54,7 @@ function getNote() {
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
       $(".notes #note-" + note.id).append(noteRender);
-    });
+    }, "json");
   });
 }
 
@@ -70,7 +70,7 @@ function editNote() {
       $(".notes #note-" + note.id).html(noteRender);
       $(".notes #note-" + note.id + ' #note_title').val(note.title);
       $(".notes #note-" + note.id + ' textarea').val(note.content);
-    });
+    }, "json");
   });
 }
 
@@ -85,7 +85,7 @@ function updateNote() {
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
       $(".notes #note-" + note.id).append(noteRender);
-    });
+    }, "json");
   }); 
 }
 
