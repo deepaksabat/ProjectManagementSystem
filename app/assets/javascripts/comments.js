@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  getComments();
   compileNewCommentTemplate();
   compileEditCommentTemplate();
   newComment();
@@ -46,6 +47,17 @@ class Comment {
 }
 
 // Create a new comment and add it to the page
+function getComments() {
+  var url = window.location.pathname;
+  $.get(url, function(data) {
+    $.each(data.comments, function(index, comment){
+      var comment = new Comment(comment);
+      var commentRender = comment.renderNewComment();
+      $(".comments").prepend(commentRender);
+    });
+  }, "json");
+}
+
 function newComment() {
   $('.new_comment').on('submit', function(event) {
     event.preventDefault();

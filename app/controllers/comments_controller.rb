@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
   def index
     if @project.owner == @user || @user.admin? || @project.collaborators.include?(@user)
       @comments = @project.comments.reverse
+      render json: @comments
     else
       flash[:alert] = "You are not authorized to perform that action."
       redirect_to root_path

@@ -42,9 +42,7 @@
       <h3>Comments</h3>
       <div class="line-dark"></div>
       <div class="comments">
-        <% @comments.each_with_index do |comment, index| %>
-          <%= render partial: "comments/comment", locals: {comment: comment, index: index, col: ""} %>
-        <%end %>
+        
       </div>
     </div> <!-- default block end  -->
   </div> <!-- col-md-8 end -->
