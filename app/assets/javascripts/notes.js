@@ -49,7 +49,7 @@ function getNote() {
   $(document).on("click", '.js-get-note', function(event) {
     event.preventDefault();
     var url = $(event.target).attr('href');
-    $.get(url).success(function(data) {
+    $.get(url, function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
@@ -80,7 +80,7 @@ function updateNote() {
     event.preventDefault();
     var values = $(this).serialize();
     var url = $(event.target).attr('action');
-    $.post(url, values).success(function(data) {
+    $.post(url, values, function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
