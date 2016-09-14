@@ -48,11 +48,8 @@ class Note {
 function getNote() {
   $(document).on("click", '.js-get-note', function(event) {
     event.preventDefault();
-    $.ajax({
-      url: $(event.target).attr('href'),
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
+    var url = $(event.target).attr('href');
+    $.get(url).success(function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
