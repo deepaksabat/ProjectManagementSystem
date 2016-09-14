@@ -62,12 +62,8 @@ function getNote() {
 function editNote() {
   $(document).on("click", ".edit-note", function(event){
     event.preventDefault();
-    var href = $(this).attr('href');
-    $.ajax({
-      url: href,
-      method: "GET",
-      dataType: 'JSON'
-    }).success(function(data) {
+    var url = $(this).attr('href');
+    $.get(url).success(function(data) {
       var note = new Note(data);
       var noteRender = note.renderEditNote();
       var id = '#' + data.id;
