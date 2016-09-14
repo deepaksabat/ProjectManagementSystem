@@ -80,12 +80,7 @@ function updateNote() {
     event.preventDefault();
     var values = $(this).serialize();
     var url = $(event.target).attr('action');
-    $.ajax({
-      url:  url,
-      method: "POST",
-      dataType: 'JSON',
-      data: values
-    }).success(function(data) {
+    $.post(url, values).success(function(data) {
       var note = new Note(data);
       var noteRender = note.renderNote();
       $(".notes #note-" + note.id).html("");
