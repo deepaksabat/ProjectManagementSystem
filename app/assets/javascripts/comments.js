@@ -7,24 +7,23 @@ $(document).ready(function(){
   updateComment();
 });
 
-class Comment {
-  constructor(attributes){
-    this.id = attributes.id;
-    this.content = attributes.content;
-    this.created_at = attributes.created_at;
-    this.task_id = attributes.task_id;
-    this.user_id = attributes.user_id;
-  } 
+function Comment(attributes) {
+  this.id = attributes.id;
+  this.content = attributes.content;
+  this.created_at = attributes.created_at;
+  this.task_id = attributes.task_id;
+  this.user_id = attributes.user_id;
+} 
 
   // Display a formatted date
-  friendlyDate() {
+Comment.prototype.friendlyDate = function() {
     var date = new Date(this.created_at);
     var friendlyDate = this.formatDate(date);
     return friendlyDate;
   }
 
   // Format JS standard date
-  formatDate(date) {
+Comment.prototype.formatDate = function(date)  {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -36,15 +35,15 @@ class Comment {
   }
 
   // render the handlebars NewComment template
-  renderNewComment(){
+Comment.prototype.renderNewComment = function() {
     return newCommentTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
   }
 
   // render the handlebars EditComment template
-  renderEditComment(){
+Comment.prototype.renderEditComment = function() {
     return editCommentTemplate({content: this.content, id: this.id, createdAt: this.friendlyDate()});
   }
-}
+
 
 // Create a new comment and add it to the page
 function getComments() {

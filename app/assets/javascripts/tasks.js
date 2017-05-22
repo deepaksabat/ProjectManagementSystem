@@ -3,66 +3,65 @@ $(document).ready(function(){
   getTasks();
 });
 
-class Task {
-  constructor(attributes){
-    this.id = attributes.id;
-    this.description = attributes.description;
-    this.name = attributes.name;
-    this.dueDate = attributes.due_date;
-    this.status = attributes.status;
-    this.createdAt = attributes.created_at;
-    this.ownerName = attributes.owner.name;
-    this.projectName = attributes.project.name;
-    this.commentCount = attributes.comments.length;
-    this.projectID = attributes.project.id;
-    this.overdue = "";
-    this.complete = "";
-    this.assignedUsers = "";
-  }
+function Task(attributes) {
+  this.id = attributes.id;
+  this.description = attributes.description;
+  this.name = attributes.name;
+  this.dueDate = attributes.due_date;
+  this.status = attributes.status;
+  this.createdAt = attributes.created_at;
+  this.ownerName = attributes.owner.name;
+  this.projectName = attributes.project.name;
+  this.commentCount = attributes.comments.length;
+  this.projectID = attributes.project.id;
+  this.overdue = "";
+  this.complete = "";
+  this.assignedUsers = "";
+}
 
   // Check if the task is overdue
-  overdueCheck() {
-    var createdDate = new Date(this.createdAt);
-    var currentDate = new Date();
-    if (createdDate < currentDate && this.status !== "complete") {
-      this.overdue = "Overdue";
-    }
-  }
-
-  // Check if the task is complete
-  completeCheck() {
-    if (this.status === "complete") {
-      this.complete = "Complete";
-    }
-  }
-
-  // Render the handlebars template
-  renderTask() {
-    return template(this);
-  }
-
-  // Iterate over the assigned users array and create a string of users
-  assignUsers(userArray) {
-    var names = "";
-    $.each(userArray, function(index, user){
-      names = names + user.name + ", ";
-    });
-    this.assignedUsers = names;
-    return this.assignedUsers;
-  }
-
-  // Check if the current user is assigned to the task
-  selfAssignCheck(userArray){
-    var email = $("#email").text().slice(0, this.length);
-    var assignment 
-    $.each(userArray, function(index, user){
-      if (user.email === email){
-        assignment = true;
-      }
-    });
-    return assignment;
+Task.prototype.overdueCheck = function() {
+  var createdDate = new Date(this.createdAt);
+  var currentDate = new Date();
+  if (createdDate < currentDate && this.status !== "complete") {
+    this.overdue = "Overdue";
   }
 }
+
+  // Check if the task is complete
+Task.prototype.completeCheck = function() {
+  if (this.status === "complete") {
+    this.complete = "Complete";
+  }
+}
+
+  // Render the handlebars template
+Task.prototype.renderTask = function() {
+  return template(this);
+}
+
+  // Iterate over the assigned users array and create a string of users
+Task.prototype.assignUsers = function(userArray) {
+  var names = "";
+  $.each(userArray, function(index, user){
+    names = names + user.name + ", ";
+  });
+  this.assignedUsers = names;
+  return this.assignedUsers;
+}
+
+  // Check if the current user is assigned to the task
+Task.prototype.selfAssignCheck = function(userArray){
+  var email = $("#email").text().slice(0, this.length);
+  var assignment 
+  $.each(userArray, function(index, user){
+    if (user.email === email){
+      assignment = true;
+    }
+  });
+  return assignment;
+}
+
 
 function getTasks() {
   $('#filter-tasks-js').on("submit", function(event) {

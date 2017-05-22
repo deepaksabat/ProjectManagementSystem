@@ -3,70 +3,69 @@ $(document).ready(function(){
   getProjects();
 });
 
-class Project {
-  constructor(attributes){
-    this.id = attributes.id;
-    this.description = attributes.description;
-    this.name = attributes.name;
-    this.dueDate = attributes.due_date;
-    this.status = attributes.status;
-    this.createdAt = attributes.created_at;
-    this.ownerName = attributes.owner.name;
-    this.overdue = "";
-    this.complete = "";
-    this.collaborators = attributes.collaborators;
-  }
+function Project(attributes) {
+  this.id = attributes.id;
+  this.description = attributes.description;
+  this.name = attributes.name;
+  this.dueDate = attributes.due_date;
+  this.status = attributes.status;
+  this.createdAt = attributes.created_at;
+  this.ownerName = attributes.owner.name;
+  this.overdue = "";
+  this.complete = "";
+  this.collaborators = attributes.collaborators;
+}
 
   // Display a formatted date
-  friendlyDate() {
-    var date = new Date(this.createdAt);
-    var friendlyDate = this.formatDate(date);
-    this.createdAt = friendlyDate;
-  }
+Project.prototype.friendlyDate = function() {
+  var date = new Date(this.createdAt);
+  var friendlyDate = this.formatDate(date);
+  this.createdAt = friendlyDate;
+}
 
   // Format JS standard date
-  formatDate(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
-  }
+Project.prototype.formatDate = function(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " at " + strTime;
+}
 
 
   // Check if the Project is overdue
-  overdueProjectCheck() {
-    var createdDate = new Date(this.createdAt);
-    var currentDate = new Date();
-    if (createdDate < currentDate && this.status !== "complete") {
-      this.overdue = "Overdue";
-    }
-  }
-
-  // Check if the Project is complete
-  completeProjectCheck() {
-    if (this.status === "complete") {
-      this.complete = "Complete";
-    }
-  }
-
-  // Render the handlebars template
-  renderProject() {
-    return projectTemplate(this);
-  }
-
-  // Iterate over the assigned users array and create a string of users
-  assignCollaborators(userArray) {
-    var names = "";
-    $.each(userArray, function(index, user){
-      names = names + user.name + ", ";
-    });
-    this.collaborators = names;
+Project.prototype.overdueProjectCheck = function() {
+  var createdDate = new Date(this.createdAt);
+  var currentDate = new Date();
+  if (createdDate < currentDate && this.status !== "complete") {
+    this.overdue = "Overdue";
   }
 }
+
+  // Check if the Project is complete
+Project.prototype.completeProjectCheck = function() {
+  if (this.status === "complete") {
+    this.complete = "Complete";
+  }
+}
+
+  // Render the handlebars template
+Project.prototype.renderProject = function() {
+  return projectTemplate(this);
+}
+
+  // Iterate over the assigned users array and create a string of users
+Project.prototype.assignCollaborators = function(userArray) {
+  var names = "";
+  $.each(userArray, function(index, user){
+    names = names + user.name + ", ";
+  });
+  this.collaborators = names;
+}
+
 
 function getProjects() {
   $('#filter-projects-js').on("submit", function(event) {
